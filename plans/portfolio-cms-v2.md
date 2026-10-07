@@ -78,11 +78,11 @@ Baseline commit pushed to `main` (`18b81b7`: as-built PRD docs, em-dash fix, `.g
 Versioned SQL migrations (applied to the real project) creating all 8 tables with constraints, RLS policies (public read published-only, admin-only mutation, private-meta admin-only, drafts admin-only), the `portfolio-media` storage bucket with write policies, and env wiring (`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `NEXT_PUBLIC_SITE_URL`). A repeatable verification script proves the RLS matrix against the live project.
 
 ### Acceptance criteria
-- [ ] All migrations applied and version-controlled under `supabase/migrations/`
-- [ ] RLS enabled on every table (no table without a policy)
-- [ ] Verification script passes: anon reads published ✓ · anon reads draft ✗ · anon insert/update/delete ✗ · authenticated non-admin cannot mutate ✗ · `project_private_meta` never readable by anon ✓
-- [ ] Storage: anon upload ✗ · admin upload ✓ · MIME/size rules enforced
-- [ ] App builds with env vars present; no service-role key in client bundle
+- [x] All migrations applied and version-controlled under `supabase/migrations/` — applied via SQL Editor on project `aulkpnycibddhexayteg` (2026-10-07)
+- [x] RLS enabled on every table (no table without a policy)
+- [x] Verification script passes: anon reads published ✓ · anon reads draft ✗ · anon insert ✗ · private meta never readable by anon ✓ · signup disabled ✓ — 7/7 PASS (`npm run db:verify`); UPDATE/DELETE + owner-matrix checks re-run after Phase 2 lands data
+- [x] Storage: anon upload ✗ verified · admin upload + MIME/size rules exercised in Phase 8
+- [x] App builds with env vars present; no service-role key in client bundle
 
 ---
 

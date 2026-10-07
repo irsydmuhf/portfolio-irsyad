@@ -7,7 +7,11 @@
 
 import { readdir, readFile } from "node:fs/promises";
 import { existsSync, readFileSync } from "node:fs";
+import dns from "node:dns";
 import pg from "pg";
+
+// Prefer IPv4 (broken IPv6 on some machines causes ECONNRESET).
+dns.setDefaultResultOrder("ipv4first");
 
 // Minimal .env.local loader (does not override real env vars).
 function loadLocalEnv() {

@@ -12,6 +12,11 @@
 //   ... same owner vars ... node scripts/verify-rls.mjs --with-mutations
 
 import { existsSync, readFileSync } from "node:fs";
+import dns from "node:dns";
+
+// Some machines have a broken IPv6 route; prefer IPv4 for every outbound
+// request so verification runs don't die with ECONNRESET mid-matrix.
+dns.setDefaultResultOrder("ipv4first");
 
 function loadLocalEnv() {
   const p = new URL("../.env.local", import.meta.url);
