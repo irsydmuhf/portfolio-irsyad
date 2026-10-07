@@ -1,13 +1,13 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { projects } from "@/data/projects";
+import type { Project } from "@/data/projects";
 import ProjectCard from "./ProjectCard";
 import ProjectFilters from "./ProjectFilters";
 
 const PROJECTS_PER_PAGE = 4;
 
-export default function ProjectGrid() {
+export default function ProjectGrid({ projects }: { projects: Project[] }) {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedSort, setSelectedSort] = useState("date");
   const [currentPage, setCurrentPage] = useState(1);
@@ -25,7 +25,7 @@ export default function ProjectGrid() {
     }
 
     return filtered;
-  }, [selectedCategory, selectedSort]);
+  }, [projects, selectedCategory, selectedSort]);
 
   const totalPages = Math.ceil(filteredProjects.length / PROJECTS_PER_PAGE);
   const startIndex = (currentPage - 1) * PROJECTS_PER_PAGE;

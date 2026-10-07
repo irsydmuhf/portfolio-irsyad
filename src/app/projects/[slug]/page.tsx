@@ -1,8 +1,17 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, ExternalLink, Calendar, Tag, User } from "lucide-react";
-import { projects } from "@/data/projects";
 import type { Project } from "@/data/projects";
+import { getPublishedProjectBySlug, getPublishedProjects } from "@/lib/projects/queries";
+
+// ISR: case studies read published rows from Supabase (Phase 3). Existing slugs
+// are prerendered; new slugs render on demand; publish triggers revalidatePath.
+export const revalidate = 300;
+
+export async function generateStaticParams() {
+  const list = await getPublishedProjects();
+  return list.map((p) => ({ slug: p.slug }));
+}
 
 interface ProjectPageProps {
   params: Promise<{ slug: string }>;
@@ -297,7 +306,13 @@ function TechnicalDetails({ project }: { project: Project }) {
   );
 }
 
-function RelatedProjects({ currentProject }: { currentProject: Project }) {
+function RelatedProjects({
+  currentProject,
+  projects,
+}: {
+  currentProject: Project;
+  projects: Project[];
+}) {
   const related = projects
     .filter((p) => p.slug !== currentProject.slug)
     .slice(0, 2);
@@ -348,7 +363,10 @@ function RelatedProjects({ currentProject }: { currentProject: Project }) {
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
   const { slug } = await params;
-  const project = projects.find((p) => p.slug === slug);
+  const [project, allProjects] = await Promise.all([
+    getPublishedProjectBySlug(slug),
+    getPublishedProjects(),
+  ]);
 
   if (!project) {
     notFound();
@@ -363,7 +381,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       <Insights project={project} />
       <BusinessImpact project={project} />
       <TechnicalDetails project={project} />
-      <RelatedProjects currentProject={project} />
+      <RelatedProjects currentProject={project} projects={allProjects} />
 
       <footer className="border-t border-charcoal-200 bg-white py-6">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">

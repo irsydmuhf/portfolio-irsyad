@@ -110,11 +110,11 @@ Idempotent migration script (re-runnable, upsert by slug) implementing the mappi
 Homepage project grid and `/projects/[slug]` read published projects from Supabase (server-side, published-only, `display_order`), keeping current components and URLs untouched. Mutations (later phases) will revalidate `/` and `/projects/[slug]`. JSON stays in the repo as backup; interim content edits flow through re-running the migration script.
 
 ### Acceptance criteria
-- [ ] `/` lists all 6 projects, same cards as v1 (focus/type columns preserved)
-- [ ] Every existing slug renders its full case study, unchanged URLs
-- [ ] Draft rows (once any exist) are invisible to anonymous requests
-- [ ] Parity spot-check: v1 page vs DB-backed page — title, summary, insights, links, related identical
-- [ ] `lint` + `build` green
+- [x] `/` lists all 6 projects, same cards as v1 (focus/type columns preserved via adapter) — pagination still 4/page as v1
+- [x] Every existing slug renders its full case study, unchanged URLs — all 6 → 200 with full template, bogus slug → 404
+- [x] Draft rows invisible to anonymous requests — RLS matrix (draft filter + select policy) passes; re-checked after first draft lands in Phase 9
+- [x] Parity spot-check: v1 vs DB-backed — solution/approach chips, github button, summaries, byte-verified em-dash title (`E2 80 94` in HTML & DB), related pair derivation
+- [x] `lint` + `build` green — ISR confirmed: `/` revalidate 5m, six slugs SSG-prerendered from DB
 
 ---
 
