@@ -1,0 +1,475 @@
+[
+  {
+    "slug": "marketplace-performance",
+    "title": "Marketplace Performance Analytics",
+    "category": "Business Analytics",
+    "summary": "KPI dashboard and marketplace analytics for e-commerce performance tracking across multiple channels.",
+    "tools": [
+      "SQL",
+      "Looker Studio",
+      "Google Sheets"
+    ],
+    "cover": "/projects/marketplace/cover.webp",
+    "github": null,
+    "role": "Data Analyst",
+    "domain": "E-commerce / Marketplace",
+    "focus": "Marketplace Performance",
+    "projectType": "Professional",
+    "data": "Marketplace Orders + Seller Data",
+    "businessProblem": "The business operated across multiple marketplace channels but lacked a centralized view of performance. Decision-makers struggled to identify which channels drove revenue, where operational bottlenecks occurred, and how to allocate resources effectively.",
+    "businessQuestions": [
+      "Which marketplace channels drive the highest revenue and profit margins?",
+      "How do seller performance metrics vary across different product categories?",
+      "What are the seasonal trends and patterns in marketplace sales?",
+      "Where are the operational bottlenecks affecting fulfillment and customer satisfaction?"
+    ],
+    "approach": [
+      "Data Collection",
+      "Cleaning & Validation",
+      "KPI Definition",
+      "Dashboard Development",
+      "Performance Analysis",
+      "Insight Generation"
+    ],
+    "solution": [
+      "Centralized Marketplace Database",
+      "Automated Data Pipeline",
+      "KPI Dashboard",
+      "Performance Reports",
+      "Trend Analysis"
+    ],
+    "insights": [
+      {
+        "title": "Channel performance varies significantly",
+        "description": "Different marketplace channels showed significant variation in conversion rates and average order values, with some channels driving 3x higher AOV despite lower traffic."
+      },
+      {
+        "title": "Clear seasonal patterns identified",
+        "description": "Distinct seasonal trends were uncovered, enabling proactive inventory planning and marketing budget allocation aligned with demand cycles."
+      },
+      {
+        "title": "Category-level insights drive strategy",
+        "description": "Product category performance analysis revealed opportunities to optimize pricing and promotional strategies for underperforming segments."
+      }
+    ],
+    "impact": "Enabled data-driven decision making for marketplace strategy, helping leadership allocate resources to high-performing channels and optimize operational efficiency.",
+    "technicalDetails": {
+      "dataProcessing": [
+        "SQL",
+        "Google Sheets",
+        "Data Validation"
+      ],
+      "automation": [
+        "Automated Reports",
+        "Data Refresh"
+      ],
+      "analytics": [
+        "KPI Analysis",
+        "Trend Analysis",
+        "Segmentation"
+      ],
+      "visualization": [
+        "Looker Studio",
+        "Google Sheets Dashboard"
+      ]
+    }
+  },
+  {
+    "slug": "customer-retention",
+    "title": "Customer Retention & Repurchase Analytics",
+    "category": "Customer Analytics",
+    "summary": "End-to-end retention analysis of 108K orders: censoring-safe cohort retention, RFM segmentation and repurchase timing, delivered as a live-formula Excel report with 16 insight sections.",
+    "tools": [
+      "Excel",
+      "Python",
+      "pandas"
+    ],
+    "cover": "",
+    "github": "https://github.com/irsydmuhf/customer-retention-analysis",
+    "role": "Data Analyst",
+    "domain": "E-commerce / D2C",
+    "focus": "Customer Retention",
+    "projectType": "Professional",
+    "data": "108,606 orders across 22 months (Jan 2025 - Oct 2026) -> 60,289 anonymized customer records; CRM export with fulfilled / return / pending statuses; names, phone numbers and addresses excluded.",
+    "businessProblem": "The business was acquiring thousands of new customers every month, but roughly three in four never ordered again and no retention baseline existed. Stakeholders could not tell whether customer quality was improving or declining, how much revenue depended on repeat buyers, when customers typically came back, or how much revenue was locked in lapsed customers - leaving retention and win-back investment unguided.",
+    "businessQuestions": [
+      "What is the repeat purchase rate, and how much revenue comes from repeat customers?",
+      "How do cohorts compare on retention when every cohort gets the same observation window?",
+      "How quickly do customers place a second order, and how concentrated is revenue among frequent buyers?",
+      "Which acquisition sources and entry products bring customers back - and which only bring one-time buyers?",
+      "How large is the lapsed-customer win-back pool, and how does a return experience affect loyalty?"
+    ],
+    "approach": [
+      "Data Profiling",
+      "Phone-to-ID Anonymization",
+      "Success-Only Metric Rules",
+      "90-Day Cohort Design",
+      "RFM Segmentation",
+      "Live-Formula Reporting"
+    ],
+    "solution": [
+      "Anonymized Customer & Order Tables",
+      "16-Section Insight Report",
+      "Maturity-Safe Cohort Matrix",
+      "RFM Segments & Win-Back Flags",
+      "721-Check Validation Script"
+    ],
+    "insights": [
+      {
+        "title": "A quarter of customers drives most of the revenue",
+        "description": "Only 27.4% of the 60,289 customers ever ordered a second time, yet repeat customers generated 58.3% of total revenue - retention, not acquisition, is the larger revenue lever."
+      },
+      {
+        "title": "The second-purchase window is 30 days",
+        "description": "Median time to the second order is 21 days, and 63.5% of all repeat purchases happen within 30 days (87.6% within 90). Campaigns that start after the first month address an already-cooling audience."
+      },
+      {
+        "title": "Cohort quality declined while volume grew",
+        "description": "Measured on a fair 90-day window with mature cohorts only, retention fell from 27.5% in early 2025 to around 21% in mid-2026 while new-customer volume grew about a third. Recent cohorts were flagged immature to avoid censoring bias rather than reported as declines."
+      },
+      {
+        "title": "Customers rebuy the same product",
+        "description": "82.7% of second orders matched the first product, making refill-reminder and subscription-style campaigns the natural next-purchase trigger instead of cross-sell."
+      },
+      {
+        "title": "One third of revenue is sleeping in lapsed customers",
+        "description": "11,259 repeat customers inactive for 120+ days were holding 33.3% of total revenue, and the RFM 'At risk' segment (5,809 customers, average recency 447 days) sized a concrete win-back target list."
+      },
+      {
+        "title": "Return experience correlates with higher loyalty",
+        "description": "Customers who experienced at least one return repurchased at 42.4% versus 26.8% for those who did not (2.25 vs 1.58 average orders) - plausibly engagement from return-resolution contact. Reported as correlation, not causation."
+      }
+    ],
+    "impact": "Delivered the first retention baseline for the business: a quantified 11,259-customer win-back pool holding a third of total revenue, a 30-day post-purchase window identified as the primary retention lever, evidence that acquisition is scaling faster than customer quality, and a repeatable cohort framework - ready to guide retention campaign prioritization and acquisition budget reallocation.",
+    "technicalDetails": {
+      "dataProcessing": [
+        "Single-pass pandas ETL over 108,606 rows - every aggregate derived in one read",
+        "Normalized phone -> anonymized customer ID (C000001...); raw PII never exported",
+        "Customer metrics computed on Status = Success only; returns and pending orders excluded",
+        "Order history deduplicated per customer: first/second order dates, days-to-repeat, return counts",
+        "Documented limits: 08xx vs 628xx phone formats not merged, latest cohorts immature, revenue gross per source"
+      ],
+      "automation": [
+        "Parameter-driven recalculation: data-end / 90-day / 120-day input cells drive every flag",
+        "Cross-validation script comparing 721 report cells against independent ETL aggregates",
+        "ETL-to-report reconciliation on row counts, revenue and segment totals - 0 formula errors",
+        "Reusable workbook: change a parameter and the whole report recalculates"
+      ],
+      "analytics": [
+        "Cohort analysis with fixed 90-day window plus maturity flag to avoid right-censoring bias",
+        "RFM scoring: R and M as rank-based quintiles (ties averaged), F as fixed bins 1/2/3/4/5+",
+        "Time-to-repeat distribution (median / P25 / P75) and Pareto revenue concentration",
+        "Win-back segmentation: repeat customers inactive 120+ days, sized by revenue",
+        "Return-experience impact measured with an explicit correlation-not-causation caveat"
+      ],
+      "visualization": [
+        "Excel Insight Report: 16 sections, KPI header, live formulas throughout",
+        "4 charts: frequency, time-to-repeat, cohort trend, new vs returning revenue",
+        "Anonymized flat tables (Customer + Orders) ready to model in Power BI"
+      ]
+    }
+  },
+  {
+    "slug": "marketplace-pipeline",
+    "title": "Marketplace Data Pipeline & Automation",
+    "category": "Data Automation",
+    "summary": "API-based ETL pipeline consolidating data from multiple marketplace platforms into a centralized database.",
+    "tools": [
+      "Google Apps Script",
+      "API",
+      "Google Sheets"
+    ],
+    "cover": "/projects/pipeline/cover.webp",
+    "github": null,
+    "role": "Data Analyst",
+    "domain": "E-commerce / Marketplace",
+    "focus": "Data Pipeline",
+    "projectType": "Professional",
+    "data": "Shopee API + TikTok Shop API",
+    "businessProblem": "Managing data from multiple marketplace platforms was time-consuming and error-prone. Manual data consolidation delayed reporting and limited real-time visibility into business performance, impacting decision-making speed.",
+    "businessQuestions": [
+      "How can we centralize data from multiple marketplace platforms?",
+      "How can we reduce manual data preparation time?",
+      "How can we ensure data accuracy and consistency across platforms?",
+      "How can we enable near real-time reporting for stakeholders?"
+    ],
+    "approach": [
+      "API Integration",
+      "Data Extraction",
+      "Transformation",
+      "Validation",
+      "Centralization",
+      "Automation"
+    ],
+    "solution": [
+      "Shopee API â†’ Apps Script",
+      "TikTok Shop API â†’ Apps Script",
+      "Central Marketplace Database",
+      "Transformation & Validation",
+      "Analytics / Dashboard / CRM"
+    ],
+    "insights": [
+      {
+        "title": "Manual reporting time significantly reduced",
+        "description": "Automated data pipeline eliminated repetitive manual data consolidation tasks, freeing up time for higher-value analytical work."
+      },
+      {
+        "title": "Data accuracy improved across platforms",
+        "description": "Standardized data format and validation rules ensured consistency, reducing errors caused by manual data handling."
+      },
+      {
+        "title": "Near real-time visibility achieved",
+        "description": "Scheduled API pulls enabled more frequent data updates, supporting faster decision-making for operations and marketing teams."
+      }
+    ],
+    "impact": "Reduced repetitive manual data preparation in the reporting workflow, enabling the team to focus on analysis rather than data collection.",
+    "technicalDetails": {
+      "dataProcessing": [
+        "Google Sheets",
+        "Apps Script",
+        "API Integration"
+      ],
+      "automation": [
+        "Triggers",
+        "API Integration",
+        "Batch Processing"
+      ],
+      "analytics": [
+        "Data Validation",
+        "ETL"
+      ],
+      "visualization": [
+        "Google Sheets Dashboard"
+      ]
+    }
+  },
+  {
+    "slug": "marketing-performance",
+    "title": "Marketing Performance & Profitability Analytics",
+    "category": "Marketing Analytics",
+    "summary": "CAC, CPL, ROI, and LTV analysis to optimize marketing spend and improve campaign profitability.",
+    "tools": [
+      "SQL",
+      "Power BI",
+      "Google Sheets"
+    ],
+    "cover": "/projects/marketing/cover.webp",
+    "github": null,
+    "role": "Data Analyst",
+    "domain": "E-commerce / Marketing",
+    "focus": "Marketing Performance",
+    "projectType": "Professional",
+    "data": "Ad Platforms + CRM + Sales Data",
+    "businessProblem": "Marketing spend was increasing but profitability was not keeping pace. The business needed clearer visibility into customer acquisition costs, campaign ROI, and customer lifetime value to optimize marketing investment and improve profitability.",
+    "businessQuestions": [
+      "Which marketing channels deliver the lowest CAC and highest ROI?",
+      "How does customer lifetime value vary across acquisition channels?",
+      "Which campaigns are driving profitable growth versus unprofitable volume?",
+      "What is the optimal budget allocation across channels?"
+    ],
+    "approach": [
+      "Data Collection",
+      "Channel Attribution",
+      "CAC Calculation",
+      "ROI Analysis",
+      "LTV Modeling",
+      "Profitability Analysis"
+    ],
+    "solution": [
+      "Multi-Channel Data Integration",
+      "Attribution Model",
+      "CAC/ROI Dashboard",
+      "LTV Analysis",
+      "Profitability Reports"
+    ],
+    "insights": [
+      {
+        "title": "Channel profitability varies significantly",
+        "description": "Some channels drive high volume but low profitability, while others deliver higher-quality customers with better long-term value."
+      },
+      {
+        "title": "LTV:CAC ratio identifies optimal channels",
+        "description": "Channels with higher LTV:CAC ratios were identified as candidates for increased investment to maximize profitable growth."
+      },
+      {
+        "title": "Campaign-level insights inform budget allocation",
+        "description": "Detailed campaign analysis revealed which promotional strategies delivered sustainable returns versus one-off spikes."
+      }
+    ],
+    "impact": "Enabled marketing team to optimize budget allocation and improve campaign profitability through data-driven channel selection.",
+    "technicalDetails": {
+      "dataProcessing": [
+        "SQL",
+        "Google Sheets",
+        "Data Modeling"
+      ],
+      "automation": [
+        "Automated Reports"
+      ],
+      "analytics": [
+        "CAC Analysis",
+        "ROI Analysis",
+        "LTV Modeling"
+      ],
+      "visualization": [
+        "Power BI",
+        "Looker Studio"
+      ]
+    }
+  },
+  {
+    "slug": "return-logistics",
+    "title": "Return & Logistics Analytics",
+    "category": "Operations Analytics",
+    "summary": "Return rate analysis and logistics KPI tracking to improve operational efficiency and customer satisfaction.",
+    "tools": [
+      "SQL",
+      "Google Sheets",
+      "Looker Studio"
+    ],
+    "cover": "/projects/logistics/cover.webp",
+    "github": null,
+    "role": "Data Analyst",
+    "domain": "E-commerce / Operations",
+    "focus": "Return & Logistics",
+    "projectType": "Professional",
+    "data": "Order Data + Logistics Data",
+    "businessProblem": "High return rates were impacting profitability and customer satisfaction. The business needed to understand return patterns, identify root causes, and track logistics performance to improve operational efficiency and reduce costs.",
+    "businessQuestions": [
+      "Which products have the highest return rates and why?",
+      "How do return rates vary across different customer segments?",
+      "What logistics KPIs are most correlated with customer satisfaction?",
+      "How can we reduce returns through better product descriptions or quality control?"
+    ],
+    "approach": [
+      "Data Collection",
+      "Return Pattern Analysis",
+      "Root Cause Analysis",
+      "Logistics KPI Tracking",
+      "Customer Feedback Integration",
+      "Recommendation Engine"
+    ],
+    "solution": [
+      "Return Rate Dashboard",
+      "Product Quality Tracking",
+      "Logistics KPI Monitor",
+      "Customer Feedback Loop",
+      "Actionable Recommendations"
+    ],
+    "insights": [
+      {
+        "title": "Return rates vary significantly by product category",
+        "description": "Certain product categories show return rates 3x higher than others, indicating quality issues or gaps in product descriptions."
+      },
+      {
+        "title": "Delivery speed impacts return rates",
+        "description": "Faster delivery correlates with lower return rates, suggesting that meeting customer expectations reduces return likelihood."
+      },
+      {
+        "title": "Customer feedback reveals root causes",
+        "description": "Integration of return reason codes with customer feedback identified actionable improvements for product listings and quality control."
+      }
+    ],
+    "impact": "Enabled operations team to identify high-return product categories and implement targeted improvements to reduce return rates.",
+    "technicalDetails": {
+      "dataProcessing": [
+        "SQL",
+        "Google Sheets",
+        "Data Cleaning"
+      ],
+      "automation": [
+        "Automated Alerts"
+      ],
+      "analytics": [
+        "Return Analysis",
+        "KPI Tracking",
+        "Root Cause Analysis"
+      ],
+      "visualization": [
+        "Looker Studio",
+        "Google Sheets Dashboard"
+      ]
+    }
+  },
+  {
+    "slug": "credit-risk-prediction",
+    "title": "Credit Risk Prediction — BNSP Certification",
+    "category": "Machine Learning",
+    "summary": "End-to-end credit risk classification following the official 9-step data science workflow for the BNSP Associate Data Scientist certification.",
+    "tools": [
+      "Python",
+      "Pandas",
+      "Scikit-learn",
+      "Google Colab"
+    ],
+    "cover": "/projects/credit-risk/cover.webp",
+    "github": null,
+    "role": "Data Analyst / Data Scientist",
+    "domain": "Banking / Finance",
+    "focus": "Credit Risk",
+    "projectType": "Certification",
+    "data": "766 rows of credit approval data (deliberately dirty, semicolon-delimited)",
+    "businessProblem": "A credit analyst at Bank ABC needed to anticipate loan defaults by predicting whether prospective customers would pay their loans smoothly (LANCAR) or become delinquent (MACET), based on historical payment data. Manual assessment was slow and inconsistent, risking bad loan approvals.",
+    "businessQuestions": [
+      "Can historical payment data predict whether a customer will be LANCAR or MACET?",
+      "Which features are most indicative of credit risk?",
+      "Can a model achieve accuracy, precision, recall, and F1-score above 80%?"
+    ],
+    "approach": [
+      "Data Collection",
+      "Data Inspection",
+      "Data Validation",
+      "Define Data Object",
+      "Data Cleaning",
+      "Data Construction",
+      "Data Labeling",
+      "Model Building",
+      "Model Evaluation"
+    ],
+    "solution": [
+      "Dirty Data Pipeline",
+      "Cleaning & Standardization",
+      "Feature Engineering",
+      "Decision Tree Classifier",
+      "Model Evaluation Report"
+    ],
+    "insights": [
+      {
+        "title": "Systematic data quality issues were identified and fixed",
+        "description": "Validation uncovered decimal-comma numbers read as text, inconsistent gender categories, out-of-range ages, impossible negative balances, and missing values — all corrected with documented business logic."
+      },
+      {
+        "title": "Ratio features strengthened model signal",
+        "description": "Engineered features (installment-to-loan ratio, arrears-to-balance ratio) captured relationships that raw columns alone did not convey."
+      },
+      {
+        "title": "Decision Tree outperformed Naive Bayes",
+        "description": "Naive Bayes failed the 80% threshold on all metrics because its feature-independence assumption conflicts with strongly correlated financial features such as loan amount, installments, and arrears."
+      }
+    ],
+    "impact": "All evaluation metrics exceeded the certification requirement: accuracy ~0.92, precision ~0.83, recall ~0.90, and F1-score ~0.86 — every metric above the 80% pass threshold set by the assessment.",
+    "technicalDetails": {
+      "dataProcessing": [
+        "Python",
+        "Pandas",
+        "Data Cleaning",
+        "Outlier Handling",
+        "Median Imputation"
+      ],
+      "automation": [
+        "Reproducible Notebook",
+        "Pickle Model Export"
+      ],
+      "analytics": [
+        "Decision Tree",
+        "Naive Bayes Comparison",
+        "Feature Importance",
+        "Classification Metrics"
+      ],
+      "visualization": [
+        "Confusion Matrix",
+        "Feature Importance Chart"
+      ]
+    }
+  }
+]
