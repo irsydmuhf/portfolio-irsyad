@@ -6,6 +6,8 @@ import ProjectCard from "./ProjectCard";
 import ProjectFilters from "./ProjectFilters";
 
 const PROJECTS_PER_PAGE = 4;
+// Small portfolios stay on a single page; pagination kicks in above this.
+const PAGINATE_ABOVE = 8;
 
 export default function ProjectGrid({ projects }: { projects: Project[] }) {
   const [selectedCategory, setSelectedCategory] = useState("all");
@@ -27,12 +29,14 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
     return filtered;
   }, [projects, selectedCategory, selectedSort]);
 
-  const totalPages = Math.ceil(filteredProjects.length / PROJECTS_PER_PAGE);
+  const paginate = filteredProjects.length > PAGINATE_ABOVE;
+  const totalPages = paginate
+    ? Math.ceil(filteredProjects.length / PROJECTS_PER_PAGE)
+    : 1;
   const startIndex = (currentPage - 1) * PROJECTS_PER_PAGE;
-  const displayedProjects = filteredProjects.slice(
-    startIndex,
-    startIndex + PROJECTS_PER_PAGE
-  );
+  const displayedProjects = paginate
+    ? filteredProjects.slice(startIndex, startIndex + PROJECTS_PER_PAGE)
+    : filteredProjects;
 
   const handleCategoryChange = (category: string) => {
     setSelectedCategory(category);

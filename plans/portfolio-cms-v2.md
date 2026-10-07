@@ -118,7 +118,7 @@ Homepage project grid and `/projects/[slug]` read published projects from Supaba
 
 ---
 
-## Phase 4: Admin authentication & shell
+## Phase 4: Admin authentication & shell ✅ DONE
 
 **User stories:** #26 (admin inaccessible to others) · login/logout lifecycle.
 
@@ -134,7 +134,7 @@ Homepage project grid and `/projects/[slug]` read published projects from Supaba
 
 ---
 
-## Phase 5: Projects list + basic create/edit
+## Phase 5: Projects list + basic create/edit ✅ DONE
 
 **User stories:** #10, #11, #12, #22 (delete later in this phase's list view), #14 partial (status field).
 
@@ -150,7 +150,7 @@ Homepage project grid and `/projects/[slug]` read published projects from Supaba
 
 ---
 
-## Phase 6: Repeatable content editors
+## Phase 6: Repeatable content editors ✅ DONE
 
 **User stories:** #17, #18 (data side), #21, #23 · insights management · related projects.
 
@@ -166,7 +166,7 @@ Editors inside the project form for: key questions, process **steps** (title + d
 
 ---
 
-## Phase 7: Public template v2 + automatic process diagram
+## Phase 7: Public template v2 + automatic process diagram ✅ DONE
 
 **User stories:** #3, #4, #5 (visual steps), #9 · PRD §40 template.
 
@@ -182,7 +182,7 @@ Refactor the case-study renderer to the §40 order: Hero (category/title/summary
 
 ---
 
-## Phase 8: Media upload & cover
+## Phase 8: Media upload & cover ✅ DONE
 
 **User stories:** #19, #20, #7 (images support the story) · cover fallback.
 
@@ -198,7 +198,7 @@ Upload pipeline: file validation (MIME allowlist, ≤8 MB, no SVG) → Supabase 
 
 ---
 
-## Phase 9: Preview & publish workflow
+## Phase 9: Preview & publish workflow ✅ DONE
 
 **User stories:** #13, #14, #24, #25 · PRD §34/§53.
 
@@ -214,7 +214,7 @@ Upload pipeline: file validation (MIME allowlist, ≤8 MB, no SVG) → Supabase 
 
 ---
 
-## Phase 10: Reorder & featured ordering
+## Phase 10: Reorder & featured ordering ✅ DONE
 
 **User stories:** #15, #16 · PRD §38.
 
@@ -229,7 +229,7 @@ Upload pipeline: file validation (MIME allowlist, ≤8 MB, no SVG) → Supabase 
 
 ---
 
-## Phase 11: Security hardening & legacy removal
+## Phase 11: Security hardening & legacy removal ✅ DONE
 
 **User stories:** #26 · security acceptance (PRD §52/§62).
 

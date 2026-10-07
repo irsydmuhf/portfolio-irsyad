@@ -1,36 +1,32 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Irsyad Muhamad Firdaus — Data Analytics Portfolio
 
-## Getting Started
+Next.js 16 portfolio with a Supabase-backed CMS. Visitors see published case studies; the owner manages content at `/admin`.
 
-First, run the development server:
+## Quick start
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+cp .env.example .env.local   # fill in the Supabase URL + anon key
+npm run dev                  # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Scripts
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Script | Purpose |
+|---|---|
+| `npm run dev` / `build` / `start` | Next.js |
+| `npm run lint`, `npm test` | ESLint, Vitest unit tests |
+| `npm run db:apply` | apply `supabase/migrations/*.sql` (needs `SUPABASE_DB_URL`) |
+| `npm run db:migrate` | one-off seed of `src/data/projects.json` into Supabase |
+| `npm run db:verify`, `auth:verify`, `cms:verify` | live verification against the real project (see docs) |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Documentation
 
-## Learn More
+- [`docs/CMS-OPERATIONS.md`](docs/CMS-OPERATIONS.md) — owner guide: login, edit, media, preview, publish, reorder, backup
+- [`docs/TECHNICAL-DOCUMENTATION.md`](docs/TECHNICAL-DOCUMENTATION.md) — architecture, security model, code map
+- [`docs/PRD.md`](docs/PRD.md) — product requirements (as-built, with v2 changes)
+- [`plans/portfolio-cms-v2.md`](plans/portfolio-cms-v2.md) — implementation plan and phase status
 
-To learn more about Next.js, take a look at the following resources:
+## Security notes
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Only `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` and `NEXT_PUBLIC_SITE_URL` are needed in production. Never set the service-role key in Vercel.

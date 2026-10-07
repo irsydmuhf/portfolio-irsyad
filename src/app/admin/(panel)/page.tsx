@@ -42,8 +42,8 @@ export default async function AdminDashboard() {
       <header>
         <h1 className="text-2xl font-bold text-navy-900">Dashboard</h1>
         <p className="mt-1 text-sm text-navy-500">
-          Content lives in Supabase; published rows appear on the site within
-          5 minutes (or instantly once publish revalidation lands).
+          Content lives in Supabase. Publishing, unpublishing and edits update the
+          public site immediately.
         </p>
       </header>
 
@@ -58,8 +58,10 @@ export default async function AdminDashboard() {
         <div className="border-b border-navy-100 px-5 py-4">
           <h2 className="font-semibold text-navy-900">Projects</h2>
           <p className="mt-1 text-sm text-navy-500">
-            Full list, editing, reorder and media arrive in the next phases —
-            see plans/portfolio-cms-v2.md.
+            <Link href="/admin/projects" className="text-orange-600 underline">
+              Manage projects
+            </Link>{" "}
+            · create, edit, preview, publish and reorder.
           </p>
         </div>
         <ul className="divide-y divide-navy-100">
@@ -68,7 +70,12 @@ export default async function AdminDashboard() {
               key={row.slug}
               className="flex items-center justify-between px-5 py-3 text-sm"
             >
-              <span className="text-navy-700">{row.slug}</span>
+              <Link
+                href="/admin/projects"
+                className="text-navy-700 hover:text-orange-600"
+              >
+                {row.slug}
+              </Link>
               <span className="flex items-center gap-3">
                 {row.featured ? (
                   <span className="rounded-full bg-orange-100 px-2 py-0.5 text-xs font-medium text-orange-700">
@@ -94,37 +101,6 @@ export default async function AdminDashboard() {
           ) : null}
         </ul>
       </section>
-
-      {process.env.NODE_ENV === "development" ? (
-        <section className="mt-8 rounded-xl border border-orange-200 bg-orange-50 p-5">
-          <h2 className="font-semibold text-orange-800">
-            Interim JSON workflow (development only)
-          </h2>
-          <p className="mt-1 text-sm text-orange-700">
-            Until the CMS editor ships, edit content via{" "}
-            <code className="rounded bg-white px-1">src/data/projects.json</code>{" "}
-            then re-run <code className="rounded bg-white px-1">npm run db:migrate</code>{" "}
-            to sync it into Supabase.
-          </p>
-          <div className="mt-3 flex flex-wrap gap-3 text-sm">
-            <Link
-              href="/admin/new"
-              className="rounded-lg border border-orange-300 bg-white px-3 py-1.5 font-medium text-orange-800 transition-colors hover:bg-orange-100"
-            >
-              + New project (JSON)
-            </Link>
-            {rows.map((row) => (
-              <Link
-                key={row.slug}
-                href={`/admin/edit/${row.slug}`}
-                className="rounded-lg border border-orange-200 bg-white px-3 py-1.5 text-orange-800 transition-colors hover:bg-orange-100"
-              >
-                Edit {row.slug}
-              </Link>
-            ))}
-          </div>
-        </section>
-      ) : null}
     </div>
   );
 }

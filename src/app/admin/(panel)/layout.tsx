@@ -35,6 +35,12 @@ export default async function AdminPanelLayout({
             >
               Dashboard
             </Link>
+            <Link
+              href="/admin/projects"
+              className="rounded-lg px-3 py-2 text-sm font-medium text-navy-700 transition-colors hover:bg-slate-50"
+            >
+              Projects
+            </Link>
           </nav>
 
           <div className="mt-auto space-y-3 pt-8">
