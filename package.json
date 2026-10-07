@@ -8,10 +8,12 @@
     "start": "next start",
     "lint": "eslint",
     "db:apply": "node scripts/apply-migrations.mjs",
-    "db:verify": "node scripts/verify-rls.mjs"
+    "db:verify": "node scripts/verify-rls.mjs",
+    "db:migrate": "node scripts/migrate-projects-to-supabase.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",
+    "@supabase/supabase-js": "^2.117.3",
     "class-variance-authority": "^0.7.1",
     "cn": "^0.4.0",
     "lucide-react": "^1.49.0",

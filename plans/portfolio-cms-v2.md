@@ -94,11 +94,11 @@ Versioned SQL migrations (applied to the real project) creating all 8 tables wit
 Idempotent migration script (re-runnable, upsert by slug) implementing the mapping table above: transforms v1 JSON → `projects` + children rows, preserves slugs/order/published state, logs per-project errors, never deletes. A parity-check script compares migrated rows against the JSON field-by-field.
 
 ### Acceptance criteria
-- [ ] Running the script twice produces no duplicates
-- [ ] All 6 projects present with identical slug, title, summary, insights, tools, technical groups
-- [ ] Steps derived from `approach[]` keep original order
-- [ ] GitHub link exists only for `customer-retention`
-- [ ] Parity report shows 0 mismatches (or documented, owner-approved exceptions)
+- [x] Running the script twice produces no duplicates — second run shows `~` updates with identical UUIDs, parity still 0
+- [x] All 6 projects present with identical slug, title, summary, insights, tools, technical groups — parity field-by-field
+- [x] Steps derived from `approach[]` keep original order — sorted `step_order` comparison passes
+- [x] GitHub link exists only for `customer-retention` — dry-run `links=1` only on that project
+- [x] Parity report shows 0 mismatches — `SUCCESS — migration + parity clean` (twice), anon visibility 6/6, RLS matrix re-verified 11/11
 
 ---
 

@@ -81,22 +81,52 @@ async function anonMatrix() {
 
   const first = rows[0];
   if (first) {
+    // Destructive probes: RLS filters rows BEFORE the mutation runs, so the
+    // correct signal is "empty representation", not an error status — PostgREST
+    // answers 204 when zero rows matched the policy. Probe, then prove the
+    // row survived untouched.
+    const before = await rest(`projects?slug=eq.${encodeURIComponent(first.slug)}&select=summary`);
+    const beforeSummary = (before.ok ? await before.json() : [])[0] ?? {};
+
     const upd = await rest(`projects?slug=eq.${encodeURIComponent(first.slug)}`, {
       method: "PATCH",
-      headers: { Prefer: "return=minimal" },
+      headers: { Prefer: "return=representation" },
       body: JSON.stringify({ summary: "anon update attempt" }),
     });
-    check("anon UPDATE rejected", !upd.ok, `status ${upd.status}`);
+    const updRows = upd.ok ? await upd.json() : [];
 
     const del = await rest(`projects?slug=eq.${encodeURIComponent(first.slug)}`, {
       method: "DELETE",
-      headers: { Prefer: "return=minimal" },
+      headers: { Prefer: "return=representation" },
     });
-    check("anon DELETE rejected", !del.ok, `status ${del.status}`);
+    const delRows = del.ok ? await del.json() : [];
 
-    // 4. Child rows of a published project readable.
-    const steps = await rest(`project_steps?select=id&project_id=eq.does-not-exist`);
-    check("child tables reachable under RLS", steps.ok, `status ${steps.status}`);
+    const after = await rest(`projects?slug=eq.${encodeURIComponent(first.slug)}&select=summary`);
+    const afterRows = after.ok ? await after.json() : [];
+    const unchanged = afterRows.length === 1 && afterRows[0].summary === beforeSummary.summary;
+
+    check(
+      "anon UPDATE rejected",
+      upd.status >= 400 || updRows.length === 0,
+      `status ${upd.status}, affected ${Array.isArray(updRows) ? updRows.length : "?"}`
+    );
+    check(
+      "anon DELETE rejected",
+      del.status >= 400 || delRows.length === 0,
+      `status ${del.status}, affected ${Array.isArray(delRows) ? delRows.length : "?"}`
+    );
+    check("row untouched by anon mutations", unchanged, `summary intact=${unchanged}`);
+
+    // 4. Child rows of a published project readable (embedded under RLS).
+    const embed = await rest(
+      `projects?slug=eq.${encodeURIComponent(first.slug)}&select=slug,project_steps(id,step_order),project_insights(id)`
+    );
+    const embedRows = embed.ok ? await embed.json() : [];
+    check(
+      "child tables reachable under RLS",
+      embed.ok && embedRows.length === 1,
+      `status ${embed.status}, steps=${embedRows[0]?.project_steps?.length ?? "?"}, insights=${embedRows[0]?.project_insights?.length ?? "?"}`
+    );
   } else {
     console.log("INFO  no published projects yet — UPDATE/DELETE/child checks skipped (re-run after migration)");
   }
