@@ -43,7 +43,7 @@ export default function ProfileCard() {
       <div className="px-6 pt-6">
         <div className="border-t border-navy-700 pt-4">
           <p className="text-xs font-semibold uppercase tracking-wider text-navy-400">
-            // Contact
+            {"// Contact"}
           </p>
           <div className="mt-3 space-y-2">
             <a

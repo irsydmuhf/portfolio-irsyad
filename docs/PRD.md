@@ -168,3 +168,18 @@ Status legend: **Implemented** · **Partial** · **Deviation** (built differentl
 - **Data-integrity note:** three broken em-dash characters in `projects.json` (double-encoded UTF-8) were corrected on 2026-10-06.
 - **Related repositories:** site source — `github.com/irsydmuhf/portfolio-irsyad`; flagship proof repo — `github.com/irsydmuhf/customer-retention-analysis`.
 - Detailed technical reference: [`TECHNICAL-DOCUMENTATION.md`](./TECHNICAL-DOCUMENTATION.md).
+
+---
+
+## v2 Update — Supabase CMS (2026-10-07)
+
+The v1 limitation "content edited via a development-only JSON admin" is superseded.
+
+- **Content store:** Supabase Postgres + Storage replace `src/data/projects.json` (kept read-only as a backup). The six existing slugs are unchanged.
+- **Admin:** `/admin` (email + password, owner-only via `admin_users` + RLS) with project list, create/edit form, repeatable editors (key questions, process steps, insights, links, related projects), private provenance panel, media/cover upload, draft preview, publish/unpublish with a validation gate, featured flag and drag-and-drop ordering.
+- **Public template:** one shared renderer (`CaseStudyView`) for public pages and previews, with an automatic responsive process diagram; empty sections are omitted.
+- **SEO:** per-project title, description, canonical URL and Open Graph tags; admin and previews are `noindex`.
+- **Removed:** the development-only JSON editor and all JSON write paths.
+- **Not included:** multi-user roles, slug-redirect table, analytics, search, comments, lightbox.
+
+See `docs/TECHNICAL-DOCUMENTATION.md` and `docs/CMS-OPERATIONS.md`.

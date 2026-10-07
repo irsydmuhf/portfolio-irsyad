@@ -1,19 +1,21 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { projects } from "@/data/projects";
+import type { Project } from "@/data/projects";
 import ProjectCard from "./ProjectCard";
 import ProjectFilters from "./ProjectFilters";
 
 const PROJECTS_PER_PAGE = 4;
+// Small portfolios stay on a single page; pagination kicks in above this.
+const PAGINATE_ABOVE = 8;
 
-export default function ProjectGrid() {
+export default function ProjectGrid({ projects }: { projects: Project[] }) {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedSort, setSelectedSort] = useState("date");
   const [currentPage, setCurrentPage] = useState(1);
 
   const filteredProjects = useMemo(() => {
-    let filtered =
+    const filtered =
       selectedCategory === "all"
         ? [...projects]
         : projects.filter((p) => p.category === selectedCategory);
@@ -25,14 +27,16 @@ export default function ProjectGrid() {
     }
 
     return filtered;
-  }, [selectedCategory, selectedSort]);
+  }, [projects, selectedCategory, selectedSort]);
 
-  const totalPages = Math.ceil(filteredProjects.length / PROJECTS_PER_PAGE);
+  const paginate = filteredProjects.length > PAGINATE_ABOVE;
+  const totalPages = paginate
+    ? Math.ceil(filteredProjects.length / PROJECTS_PER_PAGE)
+    : 1;
   const startIndex = (currentPage - 1) * PROJECTS_PER_PAGE;
-  const displayedProjects = filteredProjects.slice(
-    startIndex,
-    startIndex + PROJECTS_PER_PAGE
-  );
+  const displayedProjects = paginate
+    ? filteredProjects.slice(startIndex, startIndex + PROJECTS_PER_PAGE)
+    : filteredProjects;
 
   const handleCategoryChange = (category: string) => {
     setSelectedCategory(category);
