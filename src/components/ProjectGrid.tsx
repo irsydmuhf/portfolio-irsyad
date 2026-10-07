@@ -13,7 +13,7 @@ export default function ProjectGrid() {
   const [currentPage, setCurrentPage] = useState(1);
 
   const filteredProjects = useMemo(() => {
-    let filtered =
+    const filtered =
       selectedCategory === "all"
         ? [...projects]
         : projects.filter((p) => p.category === selectedCategory);

@@ -140,10 +140,7 @@ export async function updateProject(
   redirect("/admin");
 }
 
-export async function deleteProject(
-  slug: string,
-  _formData: FormData
-): Promise<void> {
+export async function deleteProject(slug: string): Promise<void> {
   ensureDev();
 
   const current = await readProjects();
