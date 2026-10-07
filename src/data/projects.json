@@ -393,7 +393,7 @@
   },
   {
     "slug": "credit-risk-prediction",
-    "title": "Credit Risk Prediction â€” BNSP Certification",
+    "title": "Credit Risk Prediction — BNSP Certification",
     "category": "Machine Learning",
     "summary": "End-to-end credit risk classification following the official 9-step data science workflow for the BNSP Associate Data Scientist certification.",
     "tools": [
@@ -436,7 +436,7 @@
     "insights": [
       {
         "title": "Systematic data quality issues were identified and fixed",
-        "description": "Validation uncovered decimal-comma numbers read as text, inconsistent gender categories, out-of-range ages, impossible negative balances, and missing values â€” all corrected with documented business logic."
+        "description": "Validation uncovered decimal-comma numbers read as text, inconsistent gender categories, out-of-range ages, impossible negative balances, and missing values — all corrected with documented business logic."
       },
       {
         "title": "Ratio features strengthened model signal",
@@ -447,7 +447,7 @@
         "description": "Naive Bayes failed the 80% threshold on all metrics because its feature-independence assumption conflicts with strongly correlated financial features such as loan amount, installments, and arrears."
       }
     ],
-    "impact": "All evaluation metrics exceeded the certification requirement: accuracy ~0.92, precision ~0.83, recall ~0.90, and F1-score ~0.86 â€” every metric above the 80% pass threshold set by the assessment.",
+    "impact": "All evaluation metrics exceeded the certification requirement: accuracy ~0.92, precision ~0.83, recall ~0.90, and F1-score ~0.86 — every metric above the 80% pass threshold set by the assessment.",
     "technicalDetails": {
       "dataProcessing": [
         "Python",
