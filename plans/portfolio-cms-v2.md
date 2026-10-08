@@ -296,7 +296,10 @@ Migration `supabase/migrations/007_create_content_tables.sql` (idempotent, follo
 ### What to build
 - `src/lib/content/schema.ts` — Zod: `settingsSchema`, `experienceSchema`, `educationSchema`, `skillCategorySchema`; shared `firstIssue`-style errors; required-field rules in the spirit of the project schemas.
 - `src/lib/content/queries.ts` — `server-only`, anon client (same env guard as `projects/queries.ts`), React `cache()`: `getSiteSettings`, `getExperiences`, `getEducations`, `getSkillCategories`.
-- `src/lib/content/admin.ts` — session-bound reads for admin pages (`requireAdmin()` client).
+- `src/lib/content/admin.ts` — *dropped*: content tables are `select using (true)`
+  for everyone, so admin pages read through the public queries (`queries.ts`)
+  and see exactly what the public sees; a session-bound read layer would add
+  nothing. `queries.ts` therefore serves both audiences.
 - `src/app/admin/content-actions.ts` — `saveSettings`, `saveExperience`, `deleteExperience`, `moveExperience`, `saveEducation`, `deleteEducation`, `moveEducation`, `saveSkillCategory`, `deleteSkillCategory`, `moveSkillCategory`. Same four-step contract as `project-actions.ts`: `requireAdmin` → Zod → write → `revalidatePath("/")`, `revalidatePath("/", "layout")` (root metadata), `revalidatePath("/admin", "layout")`.
 - Vitest unit tests for the four schemas (valid + invalid fixtures).
 
