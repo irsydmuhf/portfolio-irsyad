@@ -260,6 +260,96 @@ Per-project `generateMetadata` (title pattern `<Project> | Irsyad Muhamad Firdau
 
 ---
 
+## Phase 13: Content schema & seed (owner scope extension, 2026-10-08)
+
+> **Scope extension approved by owner:** CRUD must cover all site content, not only
+> projects. This supersedes the PRD §71 note that experience/education/skills stay
+> static, and the "footer/site hardcoded" status quo. Projects keep their
+> draft/preview/publish flow; **all other content is save-and-live** (save →
+> revalidate → immediately public) — these are short factual entries, not long
+> editorial pieces.
+
+### What to build
+Migration `supabase/migrations/007_create_content_tables.sql` (idempotent, follows 002/005 conventions):
+
+- `site_settings` — singleton (`id = 'main'` check constraint):
+  profile (`display_name`, `role_line`, `bio`, `email`, `linkedin_url`, `linkedin_label`, `github_url`, `github_label`, `location`, `avatar_path`),
+  header (`availability_text`, `headline`, `headline_highlight`, `tagline`),
+  footer (`resume_url`), SEO (`seo_title`, `seo_description`), `updated_at` trigger.
+- `experiences` — `period`, `role`, `company`, `division`, `employment_type`, `highlights text[]`, `display_order`.
+- `educations` — `degree`, `institution`, `detail`, `badge`, `certifications text[]`, `display_order`.
+- `skill_categories` — `name`, `skills text[]`, `display_order`.
+- RLS: public `select using (true)` (everything is public by design); admin writes
+  via `is_admin()` policies (same shape as 005); no anon writes.
+- Idempotent seed rows mirroring the current hardcoded values 1:1 (ProfileCard,
+  HomeClient header/footer, `experience.ts`, `Skills.tsx` education block, `skills.ts`).
+
+### Acceptance criteria
+- [ ] 4 tables exist, RLS enabled; anon SELECT works, anon WRITE denied (probe)
+- [ ] Seeded content is byte-equal to today's hardcoded strings (parity script)
+- [ ] Re-running the migration is a no-op
+
+---
+
+## Phase 14: Content data layer (Zod + queries + server actions)
+
+### What to build
+- `src/lib/content/schema.ts` — Zod: `settingsSchema`, `experienceSchema`, `educationSchema`, `skillCategorySchema`; shared `firstIssue`-style errors; required-field rules in the spirit of the project schemas.
+- `src/lib/content/queries.ts` — `server-only`, anon client (same env guard as `projects/queries.ts`), React `cache()`: `getSiteSettings`, `getExperiences`, `getEducations`, `getSkillCategories`.
+- `src/lib/content/admin.ts` — session-bound reads for admin pages (`requireAdmin()` client).
+- `src/app/admin/content-actions.ts` — `saveSettings`, `saveExperience`, `deleteExperience`, `moveExperience`, `saveEducation`, `deleteEducation`, `moveEducation`, `saveSkillCategory`, `deleteSkillCategory`, `moveSkillCategory`. Same four-step contract as `project-actions.ts`: `requireAdmin` → Zod → write → `revalidatePath("/")`, `revalidatePath("/", "layout")` (root metadata), `revalidatePath("/admin", "layout")`.
+- Vitest unit tests for the four schemas (valid + invalid fixtures).
+
+### Acceptance criteria
+- [ ] Every mutation: requireAdmin + Zod + RLS, human-readable errors
+- [ ] Unit tests green; `lint` + `build` green
+
+---
+
+## Phase 15: Admin content UI
+
+### What to build
+- Panel nav: **Content** group — Profile & Site (`/admin/settings`), Experience, Education, Skills.
+- `/admin/settings` — singleton form in sections (Profile / Header / Footer & resume / SEO), React Hook Form + Zod resolver (project-form styles); avatar upload reusing the media pipeline if storage policies permit a `site/` prefix, otherwise `avatar_path` text field.
+- `/admin/experience`, `/admin/education`, `/admin/skills` — list page with inline per-entry editor cards: add, edit fields, ↑/↓ reorder (accessible buttons), delete (with confirm), per-entry Save → server action → live. Empty states included.
+
+### Acceptance criteria
+- [ ] Full CRUD reachable from the panel; all new routes inherit `noindex`
+- [ ] Reorder persists and drives public order; delete asks for confirmation
+- [ ] `lint` + `build` + local smoke green
+
+---
+
+## Phase 16: Public site reads DB content + SSR tab fix
+
+### What to build
+- `src/app/page.tsx` fetches settings + experience + educations + skill categories (anon queries) alongside projects and passes them down.
+- `ProfileCard`, `Experience`, `Skills` become props-driven; header badge/headline/tagline and footer links (incl. Resume) read from settings; root `layout.tsx` metadata falls back to `seo_title`/`seo_description` from settings (current defaults preserved when empty).
+- **Tab fix:** `HomeClient` renders **all three tab panels in the initial HTML**, toggling visibility with `hidden` + proper `role="tablist"/"tab"/"tabpanel"`, `aria-selected`, `aria-controls` — experience/education content becomes crawlable while the visual behavior stays identical.
+- Remove `src/data/experience.ts` and `src/data/skills.ts` (content now lives in the DB).
+
+### Acceptance criteria
+- [ ] `curl /` HTML contains experience + education + skills text; inactive panels carry `hidden`
+- [ ] Visual/content parity with the pre-refactor homepage (seeded values)
+- [ ] Saving settings in admin changes the live site without a deploy
+- [ ] `lint` + `build` + local smoke green
+
+---
+
+## Phase 17: E2E verification, docs, release
+
+### What to build
+- Extend `scripts/verify-cms-flow.mjs`: settings save + restore roundtrip, experience create/edit/reorder/delete, education & skills save, homepage reflects DB values, **SSR tab assertion** (experience/education present in raw HTML), anon-write denial probe on the four new tables.
+- Docs: `docs/CMS-OPERATIONS.md` gains the four content sections; plan checkboxes updated.
+- Merge → deploy → run `verify-auth-flow` + `verify-cms-flow` against production (`PROBE_SITE`), then clean up: grep gate that no hardcoded content strings remain in components.
+
+### Acceptance criteria
+- [ ] Full script suite green locally and against production
+- [ ] Anonymous denied on new tables; owner CRUD works end-to-end
+- [ ] No hardcoded profile/experience/education/skills strings left in components
+
+---
+
 ## Out of scope (per PRD)
 
 Multi-user CMS, blog, comments, search, slug-redirect table (warn-only in v2), analytics events, lightbox, archived status, export-as-JSON tool (noted as future), any content invention or unapproved factual changes.

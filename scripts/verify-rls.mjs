@@ -136,6 +136,65 @@ async function anonMatrix() {
   const metaRows = meta.ok ? await meta.json() : [];
   check("anon cannot read private metadata", meta.ok && metaRows.length === 0, `${metaRows.length} row(s) leaked`);
 
+  // 5b. Content tables (Phase 13): anon reads them, anon can never write them.
+  const contentTables = [
+    "site_settings",
+    "experiences",
+    "educations",
+    "skill_categories",
+  ];
+  for (const t of contentTables) {
+    const sel = await rest(`${t}?select=id`);
+    const selRows = sel.ok ? await sel.json() : [];
+    check(`anon can read ${t}`, sel.ok && selRows.length > 0, `${selRows.length} row(s)`);
+
+    // UPDATE/DELETE probes: RLS filters rows before the mutation runs, so the
+    // correct signal is "zero affected rows" (204), not an error status.
+    const filter = t === "site_settings" ? "id=eq.main" : `id=eq.${selRows[0]?.id}`;
+    const upd = await rest(`${t}?${filter}`, {
+      method: "PATCH",
+      headers: { Prefer: "return=representation" },
+      // updated_at exists on every content table and the touch trigger
+      // overwrites it, so a (hypothetically) successful probe leaves no trace.
+      body: JSON.stringify({ updated_at: new Date().toISOString() }),
+    });
+    const updRows = upd.ok ? await upd.json() : [];
+    check(
+      `anon UPDATE rejected on ${t}`,
+      upd.status >= 400 || updRows.length === 0,
+      `status ${upd.status}, affected ${Array.isArray(updRows) ? updRows.length : "?"}`
+    );
+
+    const del = await rest(`${t}?${filter}`, {
+      method: "DELETE",
+      headers: { Prefer: "return=representation" },
+    });
+    const delRows = del.ok ? await del.json() : [];
+    check(
+      `anon DELETE rejected on ${t}`,
+      del.status >= 400 || delRows.length === 0,
+      `status ${del.status}, affected ${Array.isArray(delRows) ? delRows.length : "?"}`
+    );
+  }
+  // INSERT probes for the list tables (valid rows, so a pass cannot be faked
+  // by a check-constraint failure). site_settings is skipped: its singleton
+  // PK/check would reject a foreign id regardless of RLS; UPDATE/DELETE above
+  // cover it.
+  for (const t of ["experiences", "educations", "skill_categories"]) {
+    const ins = await rest(t, {
+      method: "POST",
+      headers: { Prefer: "return=minimal" },
+      body: JSON.stringify(
+        t === "experiences"
+          ? { period: "probe", role: "probe", company: "probe" }
+          : t === "educations"
+            ? { degree: "probe" }
+            : { name: "probe" }
+      ),
+    });
+    check(`anon INSERT rejected on ${t}`, !ins.ok, `status ${ins.status}`);
+  }
+
   // 6. Storage write rejected for anon.
   const up = await fetch(`${URL_BASE}/storage/v1/object/portfolio-media/probe.txt`, {
     method: "POST",
