@@ -129,6 +129,51 @@ export const projectInputSchema = z.object({
 export type ProjectInput = z.input<typeof projectInputSchema>;
 export type ProjectData = z.output<typeof projectInputSchema>;
 
+/**
+ * Blank project for the "new" form. Lives here (plain module) rather than in
+ * the ProjectForm client file so Server Components may call it — invoking a
+ * function exported from a "use client" module on the server throws at
+ * runtime (it shipped once as a 500 on /admin/projects/new).
+ */
+export function emptyProject(): ProjectData {
+  return {
+    title: "",
+    slug: "",
+    category: "",
+    summary: "",
+    description: "",
+    businessProblem: "",
+    keyQuestions: [],
+    role: "",
+    domain: "",
+    dataContext: "",
+    projectPeriod: "",
+    focus: "",
+    projectType: "",
+    approachSummary: "",
+    solutionSummary: "",
+    impactSummary: "",
+    tools: [],
+    technicalAnalytics: [],
+    technicalProcessing: [],
+    technicalAutomation: [],
+    technicalVisualization: [],
+    featured: false,
+    steps: [],
+    insights: [],
+    links: [],
+    related: [],
+    privateMeta: {
+      originalWorkTitles: [],
+      internalNotes: "",
+      internalSourceReferences: [],
+      confidentialityNotes: "",
+      contentVerified: false,
+      confidentialityConfirmed: false,
+    },
+  };
+}
+
 /** First human-readable message of a Zod error, with the field path. */
 export function firstIssue(error: z.ZodError): string {
   const issue = error.issues[0];

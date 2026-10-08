@@ -1,6 +1,7 @@
 import { requireAdmin } from "@/lib/admin/require";
 import { listProjects } from "@/lib/projects/admin";
-import ProjectForm, { emptyProject } from "../project-form";
+import { emptyProject } from "@/lib/projects/schema";
+import ProjectForm from "../project-form";
 
 export const metadata = { title: "New project" };
 

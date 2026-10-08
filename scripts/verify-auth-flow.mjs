@@ -254,6 +254,30 @@ async function main() {
     );
     check("dashboard lists projects from DB", dashHtml.includes("customer-retention"));
 
+    // Regression guard: this route once 500'd in production because
+    // emptyProject() was imported from a "use client" module — every server
+    // page under the panel must actually render under an admin session.
+    const newRes = await fetch(`${SITE}/admin/projects/new`, {
+      headers: { Cookie: adminCookie },
+      redirect: "manual",
+    });
+    const newHtml = newRes.status === 200 ? await newRes.text() : "";
+    check(
+      "new-project page renders under admin session",
+      newRes.status === 200 && newHtml.includes("New project"),
+      `status ${newRes.status}`
+    );
+
+    const editRes = await fetch(`${SITE}/admin/projects`, {
+      headers: { Cookie: adminCookie },
+      redirect: "manual",
+    });
+    check(
+      "projects list renders under admin session",
+      editRes.status === 200 && (await editRes.text()).includes("Projects"),
+      `status ${editRes.status}`
+    );
+
     // 12. signed-in admin opening the login page goes straight to the dashboard
     const reRes = await fetch(`${SITE}/admin/login`, {
       headers: { Cookie: adminCookie },

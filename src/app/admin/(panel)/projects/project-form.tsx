@@ -43,45 +43,6 @@ export interface RelatedOption {
   status: string;
 }
 
-export function emptyProject(): ProjectData {
-  return {
-    title: "",
-    slug: "",
-    category: "",
-    summary: "",
-    description: "",
-    businessProblem: "",
-    keyQuestions: [],
-    role: "",
-    domain: "",
-    dataContext: "",
-    projectPeriod: "",
-    focus: "",
-    projectType: "",
-    approachSummary: "",
-    solutionSummary: "",
-    impactSummary: "",
-    tools: [],
-    technicalAnalytics: [],
-    technicalProcessing: [],
-    technicalAutomation: [],
-    technicalVisualization: [],
-    featured: false,
-    steps: [],
-    insights: [],
-    links: [],
-    related: [],
-    privateMeta: {
-      originalWorkTitles: [],
-      internalNotes: "",
-      internalSourceReferences: [],
-      confidentialityNotes: "",
-      contentVerified: false,
-      confidentialityConfirmed: false,
-    },
-  };
-}
-
 const lines = (v: string) => v.split("\n");
 const clean = (v: string[]) => v.map((s) => s.trim()).filter(Boolean);
 
