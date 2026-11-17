@@ -1,5 +1,19 @@
 import { skillCategories } from "@/data/skills";
 
+const certifications = [
+  { title: "Associate Data Scientist", issuer: "BNSP", date: "Sep 2026" },
+  {
+    title: "Big Data Analytics Project-Based Internship",
+    issuer: "Rakamin Academy x Kimia Farma",
+    date: "Jan 2026",
+  },
+  {
+    title: "Cloud Practitioner Essentials (AWS Cloud)",
+    issuer: "Dicoding Indonesia",
+    date: "Dec 2024",
+  },
+];
+
 export default function Skills() {
   return (
     <div className="space-y-8">
@@ -25,6 +39,26 @@ export default function Skills() {
               Certified Associate Data Scientist
             </span>
           </div>
+        </div>
+      </div>
+
+      <div>
+        <h2 className="text-2xl font-bold text-charcoal-900">Certifications</h2>
+        <div className="mt-4 space-y-3">
+          {certifications.map((cert) => (
+            <div
+              key={cert.title}
+              className="flex items-start justify-between gap-4 rounded-lg border border-charcoal-200 bg-white p-4"
+            >
+              <div>
+                <h3 className="font-semibold text-charcoal-900">{cert.title}</h3>
+                <p className="text-sm text-charcoal-600">{cert.issuer}</p>
+              </div>
+              <span className="shrink-0 text-sm text-charcoal-500">
+                {cert.date}
+              </span>
+            </div>
+          ))}
         </div>
       </div>
 
