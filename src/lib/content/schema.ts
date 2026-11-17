@@ -6,6 +6,7 @@
 
 import { z } from "zod";
 import { isValidUrl } from "@/lib/projects/schema";
+import { TECH_ICONS } from "./tech-icons";
 
 const text = (max: number) =>
   z.string().trim().max(max, `Maximum ${max} characters.`);
@@ -44,6 +45,10 @@ const stringList = (maxItems: number, maxLen: number) =>
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 // ----------------------------------------------------------------- settings
+export const QR_TARGETS = ["linkedin", "instagram", "github", "none"] as const;
+export const qrTargetSchema = z.enum(QR_TARGETS);
+export type QrTarget = z.output<typeof qrTargetSchema>;
+
 export const settingsSchema = z.object({
   // profile sidebar
   displayName: required(120, "Name"),
@@ -58,8 +63,11 @@ export const settingsSchema = z.object({
   linkedinLabel: text(200).default(""),
   githubUrl: urlOrEmpty.default(""),
   githubLabel: text(200).default(""),
+  instagramUrl: urlOrEmpty.default(""),
   location: text(120).default(""),
   avatarPath: pathOrUrlOrEmpty.default(""),
+  // ID card QR code destination ("none" hides the QR)
+  qrTarget: qrTargetSchema.default("linkedin"),
   // homepage header
   availabilityText: text(80).default(""),
   headline: text(120).default(""),
@@ -107,6 +115,37 @@ export const skillCategorySchema = z.object({
 });
 
 export type SkillCategoryData = z.output<typeof skillCategorySchema>;
+
+// --------------------------------------------------------------- tech stack
+export const techItemSchema = z.object({
+  id: z.string().uuid().optional(),
+  name: required(60, "Name"),
+  iconSlug: z
+    .string()
+    .trim()
+    .default("")
+    .refine((v) => v === "" || Object.hasOwn(TECH_ICONS, v), "Pick a logo from the list."),
+  letters: text(4).default(""),
+  color: z
+    .string()
+    .trim()
+    .default("")
+    .refine((v) => v === "" || /^#[0-9a-fA-F]{6}$/.test(v), "Use a hex color like #F2C811."),
+  imagePath: pathOrUrlOrEmpty.default(""),
+});
+
+export type TechItemData = z.output<typeof techItemSchema>;
+
+// ------------------------------------------------------------- achievements
+export const achievementSchema = z.object({
+  id: z.string().uuid().optional(),
+  dateLabel: required(40, "Date"),
+  title: required(120, "Title"),
+  subtitle: text(120).default(""),
+  issuer: text(120).default(""),
+});
+
+export type AchievementData = z.output<typeof achievementSchema>;
 
 // ------------------------------------------------------------------ helpers
 export type MoveDirection = "up" | "down";

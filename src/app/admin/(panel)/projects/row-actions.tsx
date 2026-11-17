@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { deleteProject, setFeatured } from "../../project-actions";
-import { BTN_SECONDARY } from "./editors";
+import { BTN_SECONDARY } from "../editors";
 
 export function FeaturedToggle({
   id,

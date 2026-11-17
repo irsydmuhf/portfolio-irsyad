@@ -50,7 +50,101 @@
   --color-orange-800: #1e4580;
   --color-orange-900: #122c5c;
 
+  /* Playful portfolio palette (homepage redesign) */
+  --color-brand-50: #eef3ff;
+  --color-brand-100: #dce6ff;
+  --color-brand-200: #b9cdff;
+  --color-brand-300: #8aaaff;
+  --color-brand-400: #5b86fb;
+  --color-brand-500: #3a6cf4;
+  --color-brand-600: #2753d8;
+  --color-brand-700: #1f42ad;
+  --color-brand-800: #1d3887;
+  --color-brand-900: #1c3168;
+  --color-sun-300: #ffdb70;
+  --color-sun-400: #ffc935;
+  --color-tangerine-400: #ffa040;
+  --color-tangerine-500: #ff8a1f;
+  --color-coral-400: #f06a5e;
+  --color-coral-500: #e8463f;
+  --color-coral-600: #cc3530;
+  --color-mint-300: #7fe0df;
+  --color-mint-400: #3cc6c9;
+  --color-mint-500: #1faab0;
+  --color-ink: #15171c;
+
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-poppins), var(--font-inter), ui-sans-serif,
+    system-ui, sans-serif;
+
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-float-slow: float 9s ease-in-out infinite;
+  --animate-sway: sway 6s ease-in-out infinite;
+  --animate-blink: blink 1.1s steps(1) infinite;
+  --animate-spin-slow: spin 40s linear infinite;
+  --animate-print: print 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  --animate-marquee: marquee 30s linear infinite;
+  --animate-marquee-reverse: marquee-reverse 30s linear infinite;
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes marquee-reverse {
+    from {
+      transform: translateX(-50%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-12px);
+    }
+  }
+
+  @keyframes sway {
+    0%,
+    100% {
+      transform: rotate(-1.5deg);
+    }
+    50% {
+      transform: rotate(1.5deg);
+    }
+  }
+
+  @keyframes blink {
+    0%,
+    50% {
+      opacity: 1;
+    }
+    50.01%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes print {
+    from {
+      transform: translateY(-55%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
 }
 
 body {
@@ -63,6 +157,42 @@ body {
   background-image: linear-gradient(to right, #e4e4e4 1px, transparent 1px),
     linear-gradient(to bottom, #e4e4e4 1px, transparent 1px);
   background-size: 32px 32px;
+}
+
+/* Dotted page backdrop (homepage redesign) */
+.bg-dots {
+  background-color: #f1f2f5;
+  background-image: radial-gradient(#cfd3db 1.1px, transparent 1.1px);
+  background-size: 22px 22px;
+}
+
+/* Fine grid used on the hero desk block */
+.bg-grid-fine {
+  background-image: linear-gradient(to right, #dde2ec 1px, transparent 1px),
+    linear-gradient(to bottom, #dde2ec 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+
+/* LED dot-matrix texture for the hero monitor screen */
+.bg-dot-matrix {
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.08) 1.2px,
+    transparent 1.4px
+  );
+  background-size: 7px 7px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-float,
+  .animate-float-slow,
+  .animate-sway,
+  .animate-blink,
+  .animate-spin-slow,
+  .animate-print,
+  .animate-marquee,
+  .animate-marquee-reverse {
+    animation: none !important;
+  }
 }
 
 /* Custom scrollbar */

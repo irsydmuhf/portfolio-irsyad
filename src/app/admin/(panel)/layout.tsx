@@ -41,6 +41,48 @@ export default async function AdminPanelLayout({
             >
               Projects
             </Link>
+
+            <p className="mt-6 px-3 text-xs font-semibold uppercase tracking-wider text-navy-400">
+              Content
+            </p>
+            <div className="mt-1 flex flex-col gap-1">
+              <Link
+                href="/admin/settings"
+                className="rounded-lg px-3 py-2 text-sm font-medium text-navy-700 transition-colors hover:bg-slate-50"
+              >
+                Profile &amp; Site
+              </Link>
+              <Link
+                href="/admin/experience"
+                className="rounded-lg px-3 py-2 text-sm font-medium text-navy-700 transition-colors hover:bg-slate-50"
+              >
+                Experience
+              </Link>
+              <Link
+                href="/admin/education"
+                className="rounded-lg px-3 py-2 text-sm font-medium text-navy-700 transition-colors hover:bg-slate-50"
+              >
+                Education
+              </Link>
+              <Link
+                href="/admin/skills"
+                className="rounded-lg px-3 py-2 text-sm font-medium text-navy-700 transition-colors hover:bg-slate-50"
+              >
+                Skills
+              </Link>
+              <Link
+                href="/admin/tech-stack"
+                className="rounded-lg px-3 py-2 text-sm font-medium text-navy-700 transition-colors hover:bg-slate-50"
+              >
+                Tech Stack
+              </Link>
+              <Link
+                href="/admin/achievements"
+                className="rounded-lg px-3 py-2 text-sm font-medium text-navy-700 transition-colors hover:bg-slate-50"
+              >
+                Achievements
+              </Link>
+            </div>
           </nav>
 
           <div className="mt-auto space-y-3 pt-8">

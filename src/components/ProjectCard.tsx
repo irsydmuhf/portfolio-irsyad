@@ -1,84 +1,126 @@
 import Link from "next/link";
-import { ExternalLink, Calendar, Tag } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import type { Project } from "@/data/projects";
 
 interface ProjectCardProps {
   project: Project;
+  index?: number;
 }
 
-export default function ProjectCard({ project }: ProjectCardProps) {
+const TONES = [
+  { from: "#5b86fb", to: "#2753d8", bar: "#ffc935" },
+  { from: "#ffa040", to: "#e8631a", bar: "#ffffff" },
+  { from: "#3cc6c9", to: "#178f95", bar: "#ffc935" },
+  { from: "#f06a5e", to: "#cc3530", bar: "#ffffff" },
+];
+
+/** Illustrated placeholder for projects without (or with a broken) cover. */
+function CoverArt({ project, index }: { project: Project; index: number }) {
+  const tone = TONES[index % TONES.length];
+  const bars = [42, 68, 54, 82, 64, 95, 76];
   return (
-    <div className="overflow-hidden rounded-lg border border-navy-200 bg-white transition-all hover:border-orange-300 hover:shadow-lg">
-      {/* Project Thumbnail */}
-      <div className="relative aspect-[16/9] w-full bg-gradient-to-br from-navy-800 to-navy-900">
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center">
-            <div className="text-4xl font-bold text-white/90">
-              {project.title.split(" ").slice(0, 2).join(" ")}
-            </div>
-            <div className="mt-2 text-sm text-orange-400">
-              {project.category}
-            </div>
-          </div>
-        </div>
-        <div className="absolute left-4 top-4 rounded bg-orange-500 px-2 py-1 text-xs font-semibold text-white">
-          {project.projectType}
-        </div>
+    <div
+      className="absolute inset-0 overflow-hidden"
+      style={{ background: `linear-gradient(150deg, ${tone.from}, ${tone.to})` }}
+    >
+      <div className="bg-dot-matrix absolute inset-0 opacity-60" />
+      <div className="absolute bottom-0 left-6 right-6 flex h-[58%] items-end gap-2">
+        {bars.map((h, i) => (
+          <span
+            key={i}
+            className="flex-1 rounded-t-lg"
+            style={{
+              height: `${h}%`,
+              background: i === bars.length - 2 ? tone.bar : "rgba(255,255,255,.28)",
+            }}
+          />
+        ))}
       </div>
+      <p className="absolute left-6 top-14 line-clamp-2 max-w-[80%] font-display text-xl font-extrabold leading-tight text-white [text-shadow:0_2px_0_rgba(0,0,0,.15)] sm:text-2xl">
+        {project.title}
+      </p>
+    </div>
+  );
+}
 
-      {/* Project Info */}
-      <div className="p-6">
-        <div className="flex items-center gap-4 text-xs text-navy-500">
-          <span className="flex items-center gap-1">
-            <Calendar className="h-3 w-3" />
-            {project.focus}
+function ProjectCover({ project, index }: { project: Project; index: number }) {
+  // The illustration always renders; a real cover is layered on top as a CSS
+  // background, so a missing/broken file simply reveals the art underneath
+  // (no broken-image icon, no hydration timing issues).
+  return (
+    <div className="relative aspect-[16/10] w-full overflow-hidden rounded-[1.4rem] bg-charcoal-100">
+      <CoverArt project={project} index={index} />
+      {project.cover && (
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-[1.04]"
+          style={{ backgroundImage: `url(${JSON.stringify(project.cover)})` }}
+        />
+      )}
+      <div className="absolute left-4 top-4 flex flex-wrap gap-1.5">
+        {project.projectType && (
+          <span className="rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-bold text-ink shadow-sm backdrop-blur">
+            {project.projectType}
           </span>
-          <span className="flex items-center gap-1">
-            <Tag className="h-3 w-3" />
-            {project.domain}
-          </span>
-        </div>
+        )}
+      </div>
+    </div>
+  );
+}
 
-        <h3 className="mt-3 text-lg font-bold text-navy-900 hover:text-orange-600">
-          <Link href={`/projects/${project.slug}`}>{project.title}</Link>
-        </h3>
+export default function ProjectCard({ project, index = 0 }: ProjectCardProps) {
+  const href = `/projects/${project.slug}`;
+  return (
+    <article className="group relative flex flex-col rounded-[1.9rem] bg-white p-2.5 ring-1 ring-black/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_40px_-24px_rgba(30,60,140,.45)]">
+      <ProjectCover project={project} index={index} />
 
-        <p className="mt-2 text-sm leading-relaxed text-navy-600 line-clamp-3">
-          {project.summary}
+      <div className="flex flex-1 flex-col px-3.5 pb-3 pt-4">
+        <p className="text-xs font-bold uppercase tracking-wider text-brand-600">
+          {project.category}
+          {project.domain && <span className="font-medium text-charcoal-400"> · {project.domain}</span>}
         </p>
 
-        {/* Tools */}
-        <div className="mt-4 flex flex-wrap gap-2">
-          {project.tools.map((tool) => (
-            <span
-              key={tool}
-              className="rounded-full bg-navy-100 px-3 py-1 text-xs font-medium text-navy-700"
-            >
-              {tool}
-            </span>
-          ))}
-        </div>
-
-        <div className="mt-4 flex items-center justify-between border-t border-navy-100 pt-4">
-          <Link
-            href={`/projects/${project.slug}`}
-            className="text-sm font-semibold text-orange-600 hover:text-orange-700"
-          >
-            Read More →
+        <h3 className="mt-2 font-display text-lg font-bold leading-snug text-ink">
+          <Link href={href} className="after:absolute after:inset-0 after:rounded-[1.9rem] focus:outline-none">
+            {project.title}
           </Link>
+        </h3>
+
+        <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-charcoal-600">{project.summary}</p>
+
+        {project.tools.length > 0 && (
+          <ul className="mt-4 flex flex-wrap gap-1.5">
+            {project.tools.slice(0, 5).map((tool) => (
+              <li
+                key={tool}
+                className="rounded-full border border-charcoal-200 px-2.5 py-0.5 text-xs font-medium text-charcoal-700"
+              >
+                {tool}
+              </li>
+            ))}
+            {project.tools.length > 5 && (
+              <li className="px-1 py-0.5 text-xs font-medium text-charcoal-400">+{project.tools.length - 5}</li>
+            )}
+          </ul>
+        )}
+
+        <div className="mt-auto flex items-center justify-between pt-5">
+          <span className="inline-flex items-center gap-1 text-sm font-bold text-ink group-hover:text-brand-600">
+            Read case study
+            <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+          </span>
           {project.github && (
             <a
               href={project.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1 text-sm text-navy-500 hover:text-navy-700"
+              className="relative z-10 rounded-full border border-charcoal-200 px-3 py-1 text-xs font-semibold text-charcoal-700 transition-colors hover:border-ink hover:bg-ink hover:text-white"
             >
-              <ExternalLink className="h-4 w-4" />
               GitHub
             </a>
           )}
         </div>
       </div>
-    </div>
+    </article>
   );
 }

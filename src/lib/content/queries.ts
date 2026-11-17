@@ -8,6 +8,10 @@ import "server-only";
 import { cache } from "react";
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import {
+  toAchievement,
+  toTechItem,
+  type AchievementRow,
+  type TechItemRow,
   toEducation,
   toExperience,
   toSettings,
@@ -18,6 +22,8 @@ import {
   type SkillCategoryRow,
 } from "./rows";
 import type {
+  AchievementData,
+  TechItemData,
   EducationData,
   ExperienceData,
   SettingsData,
@@ -86,3 +92,21 @@ export const getSkillCategories = cache(
     return ((data ?? []) as SkillCategoryRow[]).map(toSkillCategory);
   }
 );
+
+export const getTechStack = cache(async (): Promise<TechItemData[]> => {
+  const { data, error } = await supabase()
+    .from("tech_stack")
+    .select("*")
+    .order("display_order", { ascending: true });
+  if (error) throw new Error(`Failed to load tech stack: ${error.message}`);
+  return ((data ?? []) as TechItemRow[]).map(toTechItem);
+});
+
+export const getAchievements = cache(async (): Promise<AchievementData[]> => {
+  const { data, error } = await supabase()
+    .from("achievements")
+    .select("*")
+    .order("display_order", { ascending: true });
+  if (error) throw new Error(`Failed to load achievements: ${error.message}`);
+  return ((data ?? []) as AchievementRow[]).map(toAchievement);
+});

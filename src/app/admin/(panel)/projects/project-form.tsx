@@ -28,7 +28,7 @@ import {
   TagInput,
   TextArea,
   TextInput,
-} from "./editors";
+} from "../editors";
 
 export interface FormMeta {
   id?: string;

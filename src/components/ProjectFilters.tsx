@@ -32,15 +32,16 @@ export default function ProjectFilters({
   ];
 
   return (
-    <div className="flex flex-wrap gap-3">
+    <div className="flex flex-wrap gap-2">
       <div className="relative">
         <select
+          aria-label="Filter by category"
           value={selectedCategory}
           onChange={(e) => {
             setSelectedCategory(e.target.value);
             onCategoryChange(e.target.value);
           }}
-          className="appearance-none rounded-lg border border-navy-200 bg-white px-4 py-2 pr-8 text-sm text-navy-700 focus:border-orange-500 focus:outline-none focus:ring-1 focus:ring-orange-500"
+          className="appearance-none rounded-full border border-charcoal-200 bg-white py-2 pl-4 pr-9 text-sm font-medium text-charcoal-800 hover:border-charcoal-300 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-200"
         >
           {categories.map((cat) => (
             <option key={cat.value} value={cat.value}>
@@ -48,17 +49,18 @@ export default function ProjectFilters({
             </option>
           ))}
         </select>
-        <ChevronDown className="pointer-events-none absolute right-2 top-1/2 h-4 w-4 -translate-y-1/2 text-navy-400" />
+        <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-charcoal-400" />
       </div>
 
       <div className="relative">
         <select
+          aria-label="Sort projects"
           value={selectedSort}
           onChange={(e) => {
             setSelectedSort(e.target.value);
             onSortChange(e.target.value);
           }}
-          className="appearance-none rounded-lg border border-navy-200 bg-white px-4 py-2 pr-8 text-sm text-navy-700 focus:border-orange-500 focus:outline-none focus:ring-1 focus:ring-orange-500"
+          className="appearance-none rounded-full border border-charcoal-200 bg-white py-2 pl-4 pr-9 text-sm font-medium text-charcoal-800 hover:border-charcoal-300 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-200"
         >
           {sortOptions.map((option) => (
             <option key={option.value} value={option.value}>
@@ -66,7 +68,7 @@ export default function ProjectFilters({
             </option>
           ))}
         </select>
-        <ChevronDown className="pointer-events-none absolute right-2 top-1/2 h-4 w-4 -translate-y-1/2 text-navy-400" />
+        <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-charcoal-400" />
       </div>
     </div>
   );

@@ -45,28 +45,36 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
 
   return (
     <div>
-      <div className="mb-6 flex items-center justify-between">
+      <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-navy-900">
+          <h2
+            id="projects-title"
+            className="font-display text-[1.75rem] font-extrabold tracking-tight text-ink sm:text-[2.1rem]"
+          >
             Selected Projects
           </h2>
-          <p className="mt-1 text-sm text-navy-600">
+          <p className="mt-1 max-w-xl text-[15px] text-charcoal-600">
             Analytics, automation, and data systems developed from real-world
             business problems.
           </p>
         </div>
+        <ProjectFilters
+          onCategoryChange={handleCategoryChange}
+          onSortChange={setSelectedSort}
+        />
       </div>
 
-      <ProjectFilters
-        onCategoryChange={handleCategoryChange}
-        onSortChange={setSelectedSort}
-      />
-
-      <div className="mt-6 grid gap-6">
-        {displayedProjects.map((project) => (
-          <ProjectCard key={project.slug} project={project} />
-        ))}
-      </div>
+      {displayedProjects.length === 0 ? (
+        <p className="rounded-[1.5rem] border border-dashed border-charcoal-300 p-10 text-center text-sm text-charcoal-500">
+          No projects in this category yet.
+        </p>
+      ) : (
+        <div className="grid gap-5 md:grid-cols-2">
+          {displayedProjects.map((project, i) => (
+            <ProjectCard key={project.slug} project={project} index={i} />
+          ))}
+        </div>
+      )}
 
       {/* Pagination */}
       {totalPages > 1 && (
@@ -74,7 +82,7 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
           <button
             onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
             disabled={currentPage === 1}
-            className="rounded-lg border border-navy-200 px-3 py-2 text-sm text-navy-600 hover:bg-navy-50 disabled:cursor-not-allowed disabled:opacity-50"
+            className="rounded-full border border-charcoal-200 px-4 py-2 text-sm font-medium text-charcoal-700 hover:bg-charcoal-100 disabled:cursor-not-allowed disabled:opacity-50"
           >
             Previous
           </button>
@@ -83,10 +91,10 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
             <button
               key={page}
               onClick={() => setCurrentPage(page)}
-              className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
+              className={`h-9 w-9 rounded-full text-sm font-semibold transition-colors ${
                 currentPage === page
-                  ? "bg-navy-900 text-white"
-                  : "border border-navy-200 text-navy-600 hover:bg-navy-50"
+                  ? "bg-ink text-white"
+                  : "border border-charcoal-200 text-charcoal-700 hover:bg-charcoal-100"
               }`}
             >
               {page}
@@ -98,7 +106,7 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
               setCurrentPage(Math.min(totalPages, currentPage + 1))
             }
             disabled={currentPage === totalPages}
-            className="rounded-lg border border-navy-200 px-3 py-2 text-sm text-navy-600 hover:bg-navy-50 disabled:cursor-not-allowed disabled:opacity-50"
+            className="rounded-full border border-charcoal-200 px-4 py-2 text-sm font-medium text-charcoal-700 hover:bg-charcoal-100 disabled:cursor-not-allowed disabled:opacity-50"
           >
             Next
           </button>

@@ -16,7 +16,7 @@ import { MAX_UPLOAD_BYTES } from "@/lib/projects/media";
 import { storageUrl } from "@/lib/projects/case-study";
 import SafeImage from "@/components/case-study/SafeImage";
 import type { MediaItem } from "@/lib/projects/admin";
-import { BTN_PRIMARY, BTN_SECONDARY, INPUT_CLASS, Section } from "./editors";
+import { BTN_PRIMARY, BTN_SECONDARY, INPUT_CLASS, Section } from "../editors";
 
 const ACCEPT = "image/jpeg,image/png,image/webp,image/avif";
 

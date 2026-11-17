@@ -21,7 +21,7 @@ import {
 import { CSS } from "@dnd-kit/utilities";
 import { ArrowDown, ArrowUp, GripVertical } from "lucide-react";
 import { reorderProjects } from "../../../project-actions";
-import { BTN_PRIMARY } from "../editors";
+import { BTN_PRIMARY } from "../../editors";
 
 interface Row {
   id: string;
