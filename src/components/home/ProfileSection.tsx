@@ -302,7 +302,7 @@ export default function ProfileSection({
         </div>
       </div>
 
-      {/* education + skills + stack | experience */}
+      {/* education + skills | experience */}
       <div className="mt-6 grid gap-x-12 gap-y-14 lg:mt-2 lg:grid-cols-[1fr_1.05fr]">
         <div className="space-y-14">
           {educations.length > 0 && (
@@ -334,13 +334,6 @@ export default function ProfileSection({
               </div>
             </div>
           )}
-
-          {techStack.length > 0 && (
-          <div>
-            <Heading>Tech Stack</Heading>
-            <TechStack items={techStack} />
-          </div>
-          )}
         </div>
 
         <div id="experience" className="scroll-mt-8">
@@ -348,6 +341,16 @@ export default function ProfileSection({
           <ExperienceTimeline items={experiences} />
         </div>
       </div>
+
+      {/* tech stack: full-bleed ticker spanning the card edge to edge */}
+      {techStack.length > 0 && (
+        <div className="mt-16">
+          <Heading>Tech Stack</Heading>
+          <div className="-mx-6 mt-6 sm:-mx-10 lg:-mx-14">
+            <TechStack items={techStack} />
+          </div>
+        </div>
+      )}
 
       {achievements.length > 0 && (
         <div className="mt-16">

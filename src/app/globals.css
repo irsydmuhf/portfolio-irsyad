@@ -84,7 +84,6 @@
   --animate-spin-slow: spin 40s linear infinite;
   --animate-print: print 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) both;
   --animate-marquee: marquee 30s linear infinite;
-  --animate-marquee-reverse: marquee-reverse 30s linear infinite;
 
   @keyframes marquee {
     from {
@@ -92,15 +91,6 @@
     }
     to {
       transform: translateX(-50%);
-    }
-  }
-
-  @keyframes marquee-reverse {
-    from {
-      transform: translateX(-50%);
-    }
-    to {
-      transform: translateX(0);
     }
   }
 
@@ -189,8 +179,7 @@ body {
   .animate-blink,
   .animate-spin-slow,
   .animate-print,
-  .animate-marquee,
-  .animate-marquee-reverse {
+  .animate-marquee {
     animation: none !important;
   }
 }

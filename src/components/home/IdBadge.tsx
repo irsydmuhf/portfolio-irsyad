@@ -8,22 +8,26 @@ import { encode } from "uqr";
 // Anatomy (canvas px):
 //   - the card hangs from its top-center A = (220, 140), tilted 6° about that
 //     point (and swaying ±1.5° around it), so the strap joint never drifts;
-//   - BOTH halves of the lanyard come out of the card's slot side by side,
-//     run up together through the plastic adjuster, then split: the left half
-//     loops down the left side, the right half down the right side, and both
-//     ends tuck away behind the card — a closed loop with no cut ends.
+//   - a single strap ("stem") leaves the card's slot and runs up into the
+//     plastic adjuster; out of the adjuster's top the lanyard branches into
+//     two halves: the left one loops down the left side, the right one down
+//     the right side, and both ends tuck away behind the card — a closed loop
+//     with no cut ends.
 
 const STRAP_MAIN = "#3563e9";
 const STRAP_EDGE = "#2148c4";
-const STRAP_W = 24;
+const STRAP_W = 24; // each branch
+const STEM_W = 30; // the single strap between card and adjuster
 
-/** Left half: from behind the card → up the left side → over the top → down into the slot. */
+/** Single strap from the card's slot up into the adjuster (hidden under it from y≈128). */
+const STEM = "M 220 146 L 220 100";
+/** Left branch: from behind the card → up the left side → over the top → into the adjuster. */
 const STRAP_LEFT =
   "M 130 498 C 80 502, 34 492, 26 440 C 18 380, 30 300, 34 230 " +
-  "C 38 150, 60 70, 110 44 C 160 24, 208 34, 208 80 L 208 146";
-/** Right half: from the slot → up → over the top → down the right side → behind the card. */
+  "C 38 150, 60 70, 110 44 C 160 24, 209 34, 209 80 L 209 104";
+/** Right branch: out of the adjuster → up → over the top → down the right side → behind the card. */
 const STRAP_RIGHT =
-  "M 232 146 L 232 80 C 232 34, 280 22, 330 28 C 380 34, 408 80, 406 150 " +
+  "M 231 104 L 231 80 C 231 34, 280 22, 330 28 C 380 34, 408 80, 406 150 " +
   "C 404 230, 396 320, 404 400 C 410 460, 388 500, 340 504 C 300 507, 260 506, 220 504";
 
 const STRAP_TEXT = Array.from({ length: 9 }, () => "PROFILE  •  ").join("");
@@ -96,19 +100,13 @@ function Strap({ id, d }: { id: string; d: string }) {
   );
 }
 
-/** Strap end in front of the card, from its top edge down into the slot. */
-function StrapTail({ offset }: { offset: number }) {
+/** The stem's end in front of the card, from its top edge down into the slot. */
+function StrapTail() {
   return (
     <div
       aria-hidden="true"
-      className="absolute top-[-2px] h-[26px] border-x-2 shadow-[0_3px_3px_-1px_rgba(0,0,0,.3)]"
-      style={{
-        left: `calc(50% + ${offset}px)`,
-        width: STRAP_W + 4,
-        transform: "translateX(-50%)",
-        backgroundColor: STRAP_MAIN,
-        borderColor: STRAP_EDGE,
-      }}
+      className="absolute left-1/2 top-[-2px] h-[26px] -translate-x-1/2 border-x-2 shadow-[0_3px_3px_-1px_rgba(0,0,0,.3)]"
+      style={{ width: STEM_W + 4, backgroundColor: STRAP_MAIN, borderColor: STRAP_EDGE }}
     />
   );
 }
@@ -149,11 +147,14 @@ export default function IdBadge({
               <stop offset="1" stopColor="#7d9cf6" />
             </linearGradient>
           </defs>
+          <path d={STEM} fill="none" stroke={STRAP_EDGE} strokeWidth={STEM_W + 4} />
+          <path d={STEM} fill="none" stroke={STRAP_MAIN} strokeWidth={STEM_W} />
           <Strap id="idb-strap-l" d={STRAP_LEFT} />
           <Strap id="idb-strap-r" d={STRAP_RIGHT} />
 
-          <rect x={186} y={84} width={68} height={44} rx={10} fill="url(#idb-slider)" stroke="#6b8cee" strokeWidth={1.5} />
-          <rect x={191} y={88} width={58} height={6} rx={3} fill="#ffffff" opacity={0.4} />
+          {/* adjuster: single strap below, the two branches leave from its top */}
+          <rect x={190} y={84} width={60} height={44} rx={10} fill="url(#idb-slider)" stroke="#6b8cee" strokeWidth={1.5} />
+          <rect x={195} y={88} width={50} height={6} rx={3} fill="#ffffff" opacity={0.4} />
           <circle cx={220} cy={116} r={3.5} fill="#ffffff" />
         </svg>
 
@@ -161,13 +162,12 @@ export default function IdBadge({
         <div className="absolute left-[93px] top-[140px] h-[404px] w-[254px]">
           <div className="animate-sway h-full w-full origin-top">
             <div className="relative h-full w-full origin-top rotate-[6deg] rounded-2xl bg-gradient-to-b from-[#f0524a] to-[#d8392f] shadow-[0_34px_40px_-22px_rgba(110,20,20,.55),inset_0_2px_0_rgba(255,255,255,.28)]">
-              {/* slot + both strap ends looping through it */}
+              {/* slot + the single strap looping through it */}
               <div
                 aria-hidden="true"
-                className="absolute left-1/2 top-[17px] h-[13px] w-[64px] -translate-x-1/2 rounded-full bg-[#f5f2f2] shadow-[inset_0_2px_3px_rgba(0,0,0,.35)]"
+                className="absolute left-1/2 top-[17px] h-[13px] w-[52px] -translate-x-1/2 rounded-full bg-[#f5f2f2] shadow-[inset_0_2px_3px_rgba(0,0,0,.35)]"
               />
-              <StrapTail offset={-12} />
-              <StrapTail offset={12} />
+              <StrapTail />
 
               {/* emblem */}
               <div
