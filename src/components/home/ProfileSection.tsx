@@ -290,7 +290,7 @@ export default function ProfileSection({
               )}
               {settings.resumeUrl && (
                 <ContactRow href={settings.resumeUrl} icon={<FileText className="h-4 w-4" />} tone="bg-brand-500">
-                  Download résumé (PDF)
+                  Download resume (PDF)
                 </ContactRow>
               )}
             </ul>

@@ -6,7 +6,7 @@ export default function SiteFooter({ settings }: { settings: SettingsData }) {
     settings.githubUrl && { href: settings.githubUrl, label: "GitHub" },
     settings.instagramUrl && { href: settings.instagramUrl, label: "Instagram" },
     { href: `mailto:${settings.email}`, label: "Email" },
-    settings.resumeUrl && { href: settings.resumeUrl, label: "Résumé" },
+    settings.resumeUrl && { href: settings.resumeUrl, label: "Resume" },
   ].filter(Boolean) as { href: string; label: string }[];
 
   return (

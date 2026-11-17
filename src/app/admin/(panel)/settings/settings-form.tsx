@@ -1,13 +1,97 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { AlertTriangle, CheckCircle2, ExternalLink, Loader2, Upload } from "lucide-react";
-import { saveSettings, uploadAvatar } from "../../content-actions";
+import { AlertTriangle, CheckCircle2, ExternalLink, FileText, Loader2, Upload, X } from "lucide-react";
+import { saveSettings, uploadAvatar, uploadResume } from "../../content-actions";
 import { settingsSchema, type QrTarget, type SettingsData } from "@/lib/content/schema";
 import { firstIssue } from "@/lib/projects/schema";
 import { BTN_PRIMARY, BTN_SECONDARY, Field, INPUT_CLASS, Section, TextArea, TextInput } from "../editors";
 
 const DEFAULT_AVATAR = "/profile/profile.jpg";
+
+function ResumeField({
+  value,
+  onUploaded,
+  onPathChange,
+}: {
+  value: string;
+  onUploaded: (url: string) => void;
+  onPathChange: (path: string) => void;
+}) {
+  const input = useRef<HTMLInputElement>(null);
+  const [busy, setBusy] = useState(false);
+  const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
+
+  async function onFile(file: File | undefined) {
+    if (!file) return;
+    setBusy(true);
+    setMsg(null);
+    const fd = new FormData();
+    fd.set("file", file);
+    const res = await uploadResume(fd);
+    setBusy(false);
+    if (input.current) input.current.value = "";
+    if (res.ok) {
+      onUploaded(res.url);
+      setMsg({ ok: true, text: "Resume updated — it is already live on the site." });
+    } else {
+      setMsg({ ok: false, text: res.error });
+    }
+  }
+
+  return (
+    <div className="space-y-3 sm:col-span-2">
+      <div>
+        <p className="text-sm font-medium text-navy-800">Resume (PDF)</p>
+        <p className="mt-0.5 text-xs text-navy-500">
+          Visitors download it from “Let&apos;s Connect” and the footer. PDF only, up to 8 MB. Uploading saves
+          immediately and replaces the previous file.
+        </p>
+      </div>
+      <div className="flex flex-wrap items-center gap-2">
+        <input
+          ref={input}
+          type="file"
+          accept="application/pdf,.pdf"
+          className="sr-only"
+          aria-label="Upload resume PDF"
+          onChange={(e) => onFile(e.target.files?.[0])}
+        />
+        <button type="button" onClick={() => input.current?.click()} disabled={busy} className={BTN_SECONDARY}>
+          {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />}
+          {busy ? "Uploading…" : value ? "Replace PDF" : "Upload PDF"}
+        </button>
+        {value && (
+          <>
+            <a href={value} target="_blank" rel="noopener noreferrer" className={BTN_SECONDARY}>
+              <FileText className="h-4 w-4" /> View current resume
+            </a>
+            <button
+              type="button"
+              onClick={() => onPathChange("")}
+              className="inline-flex items-center gap-1 rounded-lg px-2 py-1.5 text-sm text-red-600 hover:bg-red-50"
+            >
+              <X className="h-4 w-4" /> Hide resume
+            </button>
+          </>
+        )}
+      </div>
+      {!value && <p className="text-sm text-navy-500">No resume is shown on the site right now.</p>}
+      {msg && (
+        <p className={`text-sm ${msg.ok ? "text-emerald-700" : "text-red-600"}`} role={msg.ok ? "status" : "alert"}>
+          {msg.text}
+        </p>
+      )}
+      <TextInput
+        label="Resume path or URL (advanced)"
+        hint="Set automatically by upload. A site path like /resume.pdf or an https:// link also works. “Hide resume” needs Save changes."
+        value={value}
+        onChange={onPathChange}
+        maxLength={500}
+      />
+    </div>
+  );
+}
 
 const QR_OPTIONS: { value: QrTarget; label: string; field?: keyof SettingsData }[] = [
   { value: "linkedin", label: "LinkedIn", field: "linkedinUrl" },
@@ -43,7 +127,7 @@ function QrTargetField({
       </select>
       {opt.field && !url ? (
         <p role="alert" className="mt-1 text-sm text-amber-700">
-          Add your {opt.label} URL under “Contact &amp; résumé” — until then the QR code is hidden.
+          Add your {opt.label} URL under “Contact &amp; resume” — until then the QR code is hidden.
         </p>
       ) : url ? (
         <p className="mt-1 truncate text-xs text-navy-500">Encodes: {url}</p>
@@ -216,21 +300,20 @@ export default function SettingsForm({ initial }: { initial: SettingsData }) {
         </div>
       </Section>
 
-      <Section title="Contact & résumé" description="Let's Connect list and footer links.">
+      <Section title="Contact & resume" description="Let's Connect list and footer links.">
         <div className="grid gap-4 sm:grid-cols-2">
           <TextInput label="Email" required value={data.email} onChange={(v) => set({ email: v })} maxLength={200} />
-          <TextInput
-            label="Résumé URL"
-            hint="Site path (e.g. /resume.pdf) or https:// link. Empty hides it."
-            value={data.resumeUrl}
-            onChange={(v) => set({ resumeUrl: v })}
-            maxLength={500}
-          />
           <TextInput label="LinkedIn URL" value={data.linkedinUrl} onChange={(v) => set({ linkedinUrl: v })} placeholder="https://linkedin.com/in/…" maxLength={300} />
           <TextInput label="LinkedIn label" hint="Empty = derived from the URL." value={data.linkedinLabel} onChange={(v) => set({ linkedinLabel: v })} maxLength={200} />
           <TextInput label="GitHub URL" value={data.githubUrl} onChange={(v) => set({ githubUrl: v })} placeholder="https://github.com/…" maxLength={300} />
           <TextInput label="GitHub label" hint="Empty = derived from the URL." value={data.githubLabel} onChange={(v) => set({ githubLabel: v })} maxLength={200} />
           <TextInput label="Instagram URL" hint="Optional. Shown in Let's Connect and the footer." value={data.instagramUrl} onChange={(v) => set({ instagramUrl: v })} placeholder="https://instagram.com/…" maxLength={300} />
+          <ResumeField
+            value={data.resumeUrl}
+            // Upload already persisted resume_url; keep the form in sync without marking it dirty.
+            onUploaded={(url) => setData((d) => ({ ...d, resumeUrl: url }))}
+            onPathChange={(v) => set({ resumeUrl: v })}
+          />
         </div>
       </Section>
 

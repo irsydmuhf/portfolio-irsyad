@@ -12,6 +12,7 @@ import { randomUUID } from "node:crypto";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { requireAdmin } from "@/lib/admin/require";
 import { checkUpload } from "@/lib/projects/media";
+import { checkPdfUpload } from "@/lib/content/pdf";
 import { firstIssue } from "@/lib/projects/schema";
 import {
   achievementSchema,
@@ -262,6 +263,67 @@ export async function uploadAvatar(
     .update({ avatar_path: publicUrl })
     .eq("id", "main");
   if (error) return fail(GENERIC, error);
+
+  revalidateContent();
+  return { ok: true, url: publicUrl };
+}
+
+/**
+ * Resume PDF upload: stored as site/resume-<uuid>.pdf and saved to
+ * site_settings.resume_url (live immediately). The previously uploaded resume
+ * is removed; a resume set by URL/path (e.g. /resume.pdf) is never touched.
+ */
+export async function uploadResume(
+  formData: FormData
+): Promise<ActionResult<{ url: string }>> {
+  const { supabase } = await requireAdmin();
+
+  const file = formData.get("file");
+  if (!(file instanceof File) || file.size === 0) {
+    return fail("Choose a PDF to upload.");
+  }
+  const buf = new Uint8Array(await file.arrayBuffer());
+  const check = checkPdfUpload(buf.byteLength, buf.slice(0, 8));
+  if (!check.ok) return fail(check.error);
+
+  const path = `site/resume-${randomUUID()}.pdf`;
+  const { error: upErr } = await supabase.storage
+    .from(BUCKET)
+    .upload(path, buf, { contentType: "application/pdf", upsert: false });
+  if (upErr) {
+    console.error("[content] resume upload failed", upErr);
+    return fail("Upload failed. Check your connection and try again.");
+  }
+  const {
+    data: { publicUrl },
+  } = supabase.storage.from(BUCKET).getPublicUrl(path);
+
+  const { data: cur } = await supabase
+    .from("site_settings")
+    .select("resume_url")
+    .eq("id", "main")
+    .maybeSingle();
+
+  const { error } = await supabase
+    .from("site_settings")
+    .update({ resume_url: publicUrl })
+    .eq("id", "main");
+  if (error) {
+    // Don't leave an orphan behind if the settings row couldn't be updated.
+    await supabase.storage.from(BUCKET).remove([path]);
+    return fail(GENERIC, error);
+  }
+
+  // Remove the previous uploaded resume (only resume-*.pdf directly in site/).
+  const marker = `/storage/v1/object/public/${BUCKET}/site/`;
+  const old = cur?.resume_url ?? "";
+  const idx = old.indexOf(marker);
+  if (idx >= 0 && old !== publicUrl) {
+    const stale = old.slice(idx + marker.length);
+    if (/^resume-[0-9a-f-]+\.pdf$/.test(stale)) {
+      await supabase.storage.from(BUCKET).remove([`site/${stale}`]);
+    }
+  }
 
   revalidateContent();
   return { ok: true, url: publicUrl };
