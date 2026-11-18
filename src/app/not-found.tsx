@@ -9,7 +9,7 @@ export default function NotFound() {
         href="/"
         className="mt-8 inline-flex items-center rounded-lg bg-orange-500 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-orange-600"
       >
-        Back to Portfolio
+        Back to Portofolio
       </Link>
     </div>
   );

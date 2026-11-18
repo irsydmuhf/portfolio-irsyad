@@ -1,5 +1,5 @@
 // Homepage data loader: settings + experience + education + skills + featured
-// projects in one round-trip (plans/portfolio-cms-v2.md Phase 16).
+// projects in one round-trip (plans/portofolio-cms-v2.md Phase 16).
 //
 // Dev-only safety net: when Supabase is unreachable (paused project, offline,
 // missing env) `next dev` renders the bundled local seed content instead of
@@ -126,7 +126,7 @@ function localHomeContent(): HomeContent {
       instagramUrl: "",
       qrTarget: "linkedin",
       printerProjectId: "",
-      screenLine1: "PORT",
+      screenLine1: "PORTO",
       screenLine2: "FOLIO",
       screenQuery: "SELECT insight FROM data",
       tagText: "Insights",
@@ -135,7 +135,7 @@ function localHomeContent(): HomeContent {
       avatarPath: "/profile/profile.jpg",
       availabilityText: "Available for Work",
       headline: "Welcome to My",
-      headlineHighlight: "Data Analytics Portfolio",
+      headlineHighlight: "Data Analytics Portofolio",
       tagline: "Turning complex datasets into confident business decisions.",
       resumeUrl: "/resume.pdf",
       seoTitle: "",

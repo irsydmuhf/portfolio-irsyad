@@ -25,7 +25,7 @@ export default async function AdminPanelLayout({
       <div className="mx-auto flex min-h-screen max-w-7xl">
         <aside className="flex w-60 shrink-0 flex-col border-r border-navy-200 bg-white p-4">
           <p className="text-xs font-semibold uppercase tracking-wider text-orange-500">
-            Portfolio CMS
+            Portofolio CMS
           </p>
 
           <nav className="mt-4 flex flex-col gap-1">

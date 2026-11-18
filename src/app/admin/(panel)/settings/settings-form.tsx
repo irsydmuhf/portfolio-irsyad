@@ -332,7 +332,7 @@ export default function SettingsForm({
         />
       </Section>
 
-      <Section title="Hero" description="The badge and tagline around the PORTFOLIO monitor.">
+      <Section title="Hero" description="The badge and tagline around the PORTOFOLIO monitor.">
         <div className="grid gap-4 sm:grid-cols-2">
           <TextInput
             label="Availability badge"
@@ -367,12 +367,12 @@ export default function SettingsForm({
             hint="Big text on the monitor, shown in capitals. Up to 10 characters; longer lines shrink to fit."
             value={data.screenLine1}
             onChange={(v) => set({ screenLine1: v })}
-            placeholder="PORT"
+            placeholder="PORTO"
             maxLength={10}
           />
           <TextInput
             label="Screen title — line 2"
-            hint="Leave both lines empty to use PORT / FOLIO."
+            hint="Leave both lines empty to use PORTO / FOLIO."
             value={data.screenLine2}
             onChange={(v) => set({ screenLine2: v })}
             placeholder="FOLIO"

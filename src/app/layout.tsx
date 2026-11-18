@@ -12,7 +12,7 @@ const poppins = Poppins({
   variable: "--font-poppins",
 });
 
-const DEFAULT_TITLE = "Irsyad Muhamad Firdaus — Data Analytics Portfolio";
+const DEFAULT_TITLE = "Irsyad Muhamad Firdaus — Data Analytics Portofolio";
 const DEFAULT_DESCRIPTION =
   "Data Analyst turning marketplace, customer, and operational data into actionable business insights. E-commerce analytics, customer retention, reporting automation, and marketplace data pipelines.";
 

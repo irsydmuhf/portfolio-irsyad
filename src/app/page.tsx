@@ -5,7 +5,7 @@ import ProjectGrid from "@/components/ProjectGrid";
 import { getHomeContent } from "@/lib/content/home";
 
 // ISR: homepage reads settings, experience, education, skills and published
-// projects from Supabase (plans/portfolio-cms-v2.md Phases 3 & 16). Admin
+// projects from Supabase (plans/portofolio-cms-v2.md Phases 3 & 16). Admin
 // mutations revalidatePath("/") on save/publish.
 export const revalidate = 300;
 

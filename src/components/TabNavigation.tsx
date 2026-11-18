@@ -1,6 +1,6 @@
 "use client";
 
-type Tab = "portfolio" | "experience" | "education";
+type Tab = "portofolio" | "experience" | "education";
 
 interface TabNavigationProps {
   activeTab: Tab;
@@ -12,7 +12,7 @@ export default function TabNavigation({
   onTabChange,
 }: TabNavigationProps) {
   const tabs: { id: Tab; label: string }[] = [
-    { id: "portfolio", label: "03. PORTFOLIO" },
+    { id: "portofolio", label: "03. PORTOFOLIO" },
     { id: "experience", label: "01. EXPERIENCE" },
     { id: "education", label: "02. EDUCATION & SKILLS" },
   ];

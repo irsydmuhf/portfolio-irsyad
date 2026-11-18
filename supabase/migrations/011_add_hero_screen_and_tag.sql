@@ -6,7 +6,7 @@
 -- Additive and idempotent.
 
 alter table public.site_settings
-  add column if not exists screen_line1 text not null default 'PORT',
+  add column if not exists screen_line1 text not null default 'PORTO',
   add column if not exists screen_line2 text not null default 'FOLIO',
   add column if not exists screen_query text not null default 'SELECT insight FROM data',
   add column if not exists tag_text     text not null default 'Insights',

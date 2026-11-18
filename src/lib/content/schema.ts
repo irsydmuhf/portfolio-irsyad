@@ -1,4 +1,4 @@
-// Shared validation for site-content CRUD (plans/portfolio-cms-v2.md Phase 14).
+// Shared validation for site-content CRUD (plans/portofolio-cms-v2.md Phase 14).
 // Save-and-live semantics: these are short factual entries, so validation is
 // light — required identity fields, sane max lengths, http(s)-only URLs.
 // The same schema runs in client forms and server actions; the server never
@@ -85,7 +85,7 @@ export const settingsSchema = z.object({
   // project shown on the paper in the hero printer ("" = default paper)
   printerProjectId: z.union([z.string().uuid(), z.literal("")]).default(""),
   // hero monitor screen (two title lines + query line) and the red tag
-  screenLine1: text(10).default("PORT"),
+  screenLine1: text(10).default("PORTO"),
   screenLine2: text(10).default("FOLIO"),
   screenQuery: text(40).default("SELECT insight FROM data"),
   tagText: text(16).default("Insights"),

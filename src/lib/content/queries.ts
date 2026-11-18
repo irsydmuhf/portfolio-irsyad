@@ -1,4 +1,4 @@
-// Public read access for the content tables (plans/portfolio-cms-v2.md
+// Public read access for the content tables (plans/portofolio-cms-v2.md
 // Phase 14). Server-only: anon credentials + RLS select-allowed reads.
 // Request-deduped via React cache(); invalidated by revalidatePath in the
 // content server actions (save-and-live).

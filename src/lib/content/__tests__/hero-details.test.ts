@@ -8,7 +8,7 @@ const parse = (extra: Record<string, unknown>) => settingsSchema.safeParse({ ...
 describe("hero screen + red tag settings", () => {
   it("defaults reproduce the original look", () => {
     const d = settingsSchema.parse(base);
-    expect(d.screenLine1).toBe("PORT");
+    expect(d.screenLine1).toBe("PORTO");
     expect(d.screenLine2).toBe("FOLIO");
     expect(d.screenQuery).toBe("SELECT insight FROM data");
     expect(d.tagText).toBe("Insights");
@@ -39,7 +39,7 @@ describe("hero screen + red tag settings", () => {
   it("keeps a deliberate blank but defaults a missing column (pre-migration 011)", () => {
     const row = { display_name: "I", email: "a@b.co" } as SettingsRow;
     const missing = toSettings(row);
-    expect(missing.screenLine1).toBe("PORT");
+    expect(missing.screenLine1).toBe("PORTO");
     expect(missing.tagText).toBe("Insights");
 
     const blank = toSettings({ ...row, screen_line1: "", tag_text: "" });

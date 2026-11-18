@@ -1,4 +1,4 @@
-// Public read access for the portfolio (Phase 3, plans/portfolio-cms-v2.md).
+// Public read access for the portofolio (Phase 3, plans/portofolio-cms-v2.md).
 // Server-only: anon credentials + published-only queries, RLS as the boundary.
 // Rows are adapted back to the legacy v1 `Project` shape so existing UI
 // components stay byte-identical until the Phase 7 template refactor.

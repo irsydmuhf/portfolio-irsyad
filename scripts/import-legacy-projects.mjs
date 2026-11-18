@@ -1,6 +1,6 @@
 // scripts/import-legacy-projects.mjs
 // Hides every existing project (status -> draft, nothing deleted) and imports
-// the projects from the previous portfolio (github.com/irsydmuhf/portofolio).
+// the projects from the previous portofolio (github.com/irsydmuhf/portofolio).
 //
 // Usage:
 //   node scripts/import-legacy-projects.mjs --dry-run   # print plan only
@@ -324,7 +324,7 @@ const rows = legacy.map((p, i) => ({
   business_problem: p.problem,
   approach_summary: p.approach,
   impact_summary: detail[p.slug].impact ?? p.outcome,
-  project_type: p.projectType ?? "Portfolio",
+  project_type: p.projectType ?? "Portofolio",
   role: "Data Analyst",
   domain: detail[p.slug].domain,
   focus: detail[p.slug].focus,

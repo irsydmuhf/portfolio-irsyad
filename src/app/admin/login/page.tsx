@@ -50,7 +50,7 @@ export default async function LoginPage({
       <main className="flex min-h-screen items-center justify-center bg-slate-50 px-4">
         <div className="w-full max-w-md rounded-xl border border-navy-200 bg-white p-8 shadow-sm">
           <p className="text-xs font-semibold uppercase tracking-wider text-orange-500">
-            Portfolio CMS
+            Portofolio CMS
           </p>
           <h1 className="mt-3 text-2xl font-bold text-navy-900">
             Admin access required
@@ -90,7 +90,7 @@ export default async function LoginPage({
           ← Back to site
         </Link>
         <p className="mt-4 text-xs font-semibold uppercase tracking-wider text-orange-500">
-          Portfolio CMS
+          Portofolio CMS
         </p>
         <h1 className="mt-2 text-2xl font-bold text-navy-900">Admin login</h1>
         <p className="mt-1 text-sm text-navy-500">Owner access only.</p>

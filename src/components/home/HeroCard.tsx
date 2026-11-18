@@ -79,7 +79,7 @@ export interface HeroTag {
   url: string;
 }
 
-const DEFAULT_SCREEN: HeroScreen = { line1: "PORT", line2: "FOLIO", query: "SELECT insight FROM data" };
+const DEFAULT_SCREEN: HeroScreen = { line1: "PORTO", line2: "FOLIO", query: "SELECT insight FROM data" };
 const DEFAULT_TAG: HeroTag = { text: "Insights", url: "" };
 
 /** Shrinks the screen title as lines get longer so they stay inside the screen. */
@@ -461,7 +461,7 @@ export default function HeroCard({
       className="rounded-[2.5rem] bg-white p-2.5 shadow-[0_30px_60px_-40px_rgba(30,60,140,.45)] ring-1 ring-black/5 sm:p-4"
     >
       <h1 id="hero-title" className="sr-only">
-        {name} — {roleLine || "Data Analyst & Data Engineer"} Portfolio
+        {name} — {roleLine || "Data Analyst & Data Engineer"} Portofolio
       </h1>
 
       <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-b from-[#f5f8ff] via-[#dce6ff] to-[#7d9ffc]">

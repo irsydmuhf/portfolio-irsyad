@@ -84,7 +84,7 @@ export function toSettings(row: SettingsRow): SettingsData {
     qrTarget: toQrTarget(row.qr_target),
     printerProjectId: row.printer_project_id ?? "",
     // null/undefined (before migration 011) = the original look; "" is a deliberate blank
-    screenLine1: row.screen_line1 ?? "PORT",
+    screenLine1: row.screen_line1 ?? "PORTO",
     screenLine2: row.screen_line2 ?? "FOLIO",
     screenQuery: row.screen_query ?? "SELECT insight FROM data",
     tagText: row.tag_text ?? "Insights",

@@ -1,4 +1,4 @@
-// Shared validation (client forms + server actions) — plans/portfolio-cms-v2.md
+// Shared validation (client forms + server actions) — plans/portofolio-cms-v2.md
 // "Validation". The same schema runs in both places; the server never trusts
 // the client copy.
 

@@ -1,5 +1,5 @@
 // scripts/migrate-projects-to-supabase.mjs
-// Phase 2 (plans/portfolio-cms-v2.md): v1 JSON -> Supabase Postgres.
+// Phase 2 (plans/portofolio-cms-v2.md): v1 JSON -> Supabase Postgres.
 // PRD §54: read, transform, insert, log errors per project, avoid duplicates
 // on re-run, never delete projects. Mapping follows the plan's migration table.
 //

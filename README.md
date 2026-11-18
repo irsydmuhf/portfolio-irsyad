@@ -1,6 +1,6 @@
-# Irsyad Muhamad Firdaus — Data Analytics Portfolio
+# Irsyad Muhamad Firdaus — Data Analytics Portofolio
 
-Next.js 16 portfolio with a Supabase-backed CMS. Visitors see published case studies; the owner manages content at `/admin`.
+Next.js 16 portofolio with a Supabase-backed CMS. Visitors see published case studies; the owner manages content at `/admin`.
 
 ## Quick start
 
@@ -25,7 +25,7 @@ npm run dev                  # http://localhost:3000
 - [`docs/CMS-OPERATIONS.md`](docs/CMS-OPERATIONS.md) — owner guide: login, edit, media, preview, publish, reorder, backup
 - [`docs/TECHNICAL-DOCUMENTATION.md`](docs/TECHNICAL-DOCUMENTATION.md) — architecture, security model, code map
 - [`docs/PRD.md`](docs/PRD.md) — product requirements (as-built, with v2 changes)
-- [`plans/portfolio-cms-v2.md`](plans/portfolio-cms-v2.md) — implementation plan and phase status
+- [`plans/portofolio-cms-v2.md`](plans/portofolio-cms-v2.md) — implementation plan and phase status
 
 ## Security notes
 

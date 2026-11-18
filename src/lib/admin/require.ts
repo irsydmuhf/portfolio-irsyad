@@ -1,5 +1,5 @@
 // Authoritative admin gate for layouts, pages and server actions
-// (plans/portfolio-cms-v2.md Phase 4): a valid Supabase session AND a row in
+// (plans/portofolio-cms-v2.md Phase 4): a valid Supabase session AND a row in
 // admin_users. The membership read itself is protected by RLS
 // (`user_id = auth.uid()`), so a forged or expired session yields no row.
 

@@ -1,6 +1,6 @@
 # CMS Operations Guide
 
-How to run the portfolio CMS day to day. Content lives in Supabase (Postgres + Storage); the Next.js site reads it and the admin panel at `/admin` edits it.
+How to run the portofolio CMS day to day. Content lives in Supabase (Postgres + Storage); the Next.js site reads it and the admin panel at `/admin` edits it.
 
 ## Environment
 

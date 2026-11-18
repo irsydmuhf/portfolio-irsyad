@@ -8,10 +8,10 @@ import Experience from "@/components/Experience";
 import Skills from "@/components/Skills";
 import type { Project } from "@/data/projects";
 
-type Tab = "portfolio" | "experience" | "education";
+type Tab = "portofolio" | "experience" | "education";
 
 export default function HomeClient({ projects }: { projects: Project[] }) {
-  const [activeTab, setActiveTab] = useState<Tab>("portfolio");
+  const [activeTab, setActiveTab] = useState<Tab>("portofolio");
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -25,7 +25,7 @@ export default function HomeClient({ projects }: { projects: Project[] }) {
             <p className="mt-2 text-sm text-navy-500">Based in Indonesia</p>
             <h1 className="mt-4 text-center text-3xl font-bold text-navy-900 sm:text-4xl">
               Welcome to My{" "}
-              <span className="text-orange-500">Data Analytics Portfolio</span>
+              <span className="text-orange-500">Data Analytics Portofolio</span>
             </h1>
             <p className="mt-2 text-center text-navy-600">
               Turning complex datasets into confident business decisions.
@@ -49,7 +49,7 @@ export default function HomeClient({ projects }: { projects: Project[] }) {
 
           {/* Content Area */}
           <div className="min-h-0">
-            {activeTab === "portfolio" && (
+            {activeTab === "portofolio" && (
               <div className="rounded-lg border border-navy-200 bg-white p-6">
                 <ProjectGrid projects={projects} />
               </div>

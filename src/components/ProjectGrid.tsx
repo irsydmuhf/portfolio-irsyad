@@ -6,7 +6,7 @@ import ProjectCard from "./ProjectCard";
 import ProjectFilters from "./ProjectFilters";
 
 const PROJECTS_PER_PAGE = 4;
-// Small portfolios stay on a single page; pagination kicks in above this.
+// Small portofolios stay on a single page; pagination kicks in above this.
 const PAGINATE_ABOVE = 8;
 
 export default function ProjectGrid({ projects }: { projects: Project[] }) {

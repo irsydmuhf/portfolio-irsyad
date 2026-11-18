@@ -1,11 +1,11 @@
 # Product Requirements Document (As-Built)
-## Data Analytics Portfolio — Irsyad Muhamad Firdaus
+## Data Analytics Portofolio — Irsyad Muhamad Firdaus
 
 | | |
 |---|---|
 | **Document type** | As-built PRD — describes the delivered v1.0 state |
 | **Date** | 2026-10-06 |
-| **Product** | Personal Data Analytics Portfolio website |
+| **Product** | Personal Data Analytics Portofolio website |
 | **Platform** | Web, responsive (mobile / tablet / desktop) |
 | **Primary language** | English |
 | **Primary audience** | Recruiters, hiring managers, data/analytics leads, potential clients |
@@ -25,9 +25,9 @@ From the candidate's perspective: there is no single place that presents profess
 
 ## Solution
 
-A project-first personal portfolio website where the work leads and the profile supports it:
+A project-first personal portofolio website where the work leads and the profile supports it:
 
-- A single-page homepage with a profile sidebar and tabbed content: **Portfolio** (selected projects), **Experience**, and **Education & Skills**.
+- A single-page homepage with a profile sidebar and tabbed content: **Portofolio** (selected projects), **Experience**, and **Education & Skills**.
 - Six case studies, each on its own shareable URL, following a consistent narrative template: business problem → key questions → approach → solution → insights → impact → technical details → related projects.
 - Public proof of authorship for the flagship case study through a linked, sanitized GitHub repository built on synthetic data.
 - Content stored as structured data (JSON) with a development-only admin panel for CRUD, published through Git → Vercel auto-deploy. No database, no CMS, no backend.
@@ -44,7 +44,7 @@ A project-first personal portfolio website where the work leads and the profile 
 7. As a **recruiter**, I want a source-code link when a public repository exists, so that I can inspect code quality — and no defensive explanations when it does not.
 8. As a **visitor**, I want to download the résumé directly from any page, so that I can archive the candidate.
 9. As a **visitor**, I want contact links (email, LinkedIn, GitHub) in a predictable place, so that I can reach out immediately.
-10. As a **mobile visitor**, I want the full site — tabs, project list, case studies — to work on a small screen, so that I can review the portfolio anywhere.
+10. As a **mobile visitor**, I want the full site — tabs, project list, case studies — to work on a small screen, so that I can review the portofolio anywhere.
 11. As a **visitor who mistypes a URL**, I want a clear 404 page with a way back, so that I am not stuck.
 12. As the **site owner**, I want to create, edit, and delete case studies through a form without touching UI components, so that content updates stay cheap.
 13. As the **site owner**, I want duplicate slugs to be rejected with an error rather than silently overwriting an existing project, so that content is never lost.
@@ -57,8 +57,8 @@ A project-first personal portfolio website where the work leads and the profile 
 
 **Information architecture**
 
-- Single-page homepage with client-side tab navigation (Portfolio / Experience / Education & Skills); case studies live at individual `/projects/<slug>` routes. The original multi-page IA (`/about`, `/experience`, `/resume`) was not built; contact and résumé live in the footer and profile sidebar.
-- Tab selection is in-memory component state — it is not URL-addressable; a fresh visit always lands on the Portfolio tab.
+- Single-page homepage with client-side tab navigation (Portofolio / Experience / Education & Skills); case studies live at individual `/projects/<slug>` routes. The original multi-page IA (`/about`, `/experience`, `/resume`) was not built; contact and résumé live in the footer and profile sidebar.
+- Tab selection is in-memory component state — it is not URL-addressable; a fresh visit always lands on the Portofolio tab.
 
 **Content model**
 
@@ -103,12 +103,12 @@ Status legend: **Implemented** · **Partial** · **Deviation** (built differentl
 
 | Original § | Requirement (condensed) | Status | Notes |
 |---|---|---|---|
-| §1 | Projects-first portfolio showing real-world analytics | Implemented | Portfolio is the default tab; profile sits in a persistent sidebar |
+| §1 | Projects-first portofolio showing real-world analytics | Implemented | Portofolio is the default tab; profile sits in a persistent sidebar |
 | §2 | Business understanding, technical capability, professional experience | Implemented | Case-study template covers all three dimensions |
 | §3 | Value understandable in 30–60 s | Partial | Designed for it; not validated with actual recruiters |
 | §5 | Recommended hero statement | Deviation | Header uses a compact hero with tagline "Turning complex datasets into confident business decisions." |
 | §6–§7 | Multi-page IA + top navbar | Deviation | Tabbed single page; no navbar — footer + sidebar carry the links |
-| §8 | Homepage section order | Deviation | Re-expressed as tabs: Portfolio → Experience → Education & Skills; About folded into sidebar bio; contact in footer |
+| §8 | Homepage section order | Deviation | Re-expressed as tabs: Portofolio → Experience → Education & Skills; About folded into sidebar bio; contact in footer |
 | §9 | Hero with badge/availability | Partial | "Available for Work" badge and "Based in Indonesia" present; no hero CTA buttons (Resume link is in footer) |
 | §10 | Selected Projects with subheading | Implemented | Extended with category filter, sorting, pagination |
 | §11 | Five flagship projects | Implemented | Six projects (five professional + one certification project) |

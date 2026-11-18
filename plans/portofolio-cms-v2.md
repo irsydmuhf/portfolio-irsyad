@@ -1,4 +1,4 @@
-# Plan: Portfolio CMS v2 — Supabase Refactor
+# Plan: Portofolio CMS v2 — Supabase Refactor
 
 > **Source PRD:** `PRD_Portfolio_CMS_Refactor_v2.md` (v2.0, 2026-10-07, 76 sections)
 > **Baseline:** tag `v1.0-baseline` @ `main` commit `18b81b7` · branch `feat/portfolio-cms`
@@ -27,7 +27,7 @@
 - **Legacy JSON:** kept in-repo as read-only backup until Phase 11; legacy dev-only admin + JSON write path are removed in Phase 11 (PRD §54 phase 7).
 - **Interim content workflow (Phases 3–10):** public reads come from the DB while the new admin is still building — content changes go through re-running the idempotent migration script (upsert by slug) until Phase 9 delivers draft→preview→publish.
 - **Design (PRD §71):** tabs, profile sidebar, theme tokens, experience/education/skills, footer stay as-is. Public template changes are limited to the case-study page per §40.
-- **Content rules:** no invented portfolio content; factual claims unchanged without explicit owner approval (PRD §74.20–22).
+- **Content rules:** no invented portofolio content; factual claims unchanged without explicit owner approval (PRD §74.20–22).
 
 ### Content migration mapping (JSON → Postgres)
 

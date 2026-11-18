@@ -130,7 +130,7 @@ export default function CaseStudyView({
               className="inline-flex items-center gap-1.5 rounded-full bg-white/80 px-3.5 py-1.5 text-xs font-semibold text-ink shadow-sm ring-1 ring-black/5 backdrop-blur transition-colors hover:bg-ink hover:text-white"
             >
               <ArrowLeft className="h-3.5 w-3.5" />
-              Back to Portfolio
+              Back to Portofolio
             </Link>
             {p.projectType ? (
               <span className="rounded-full bg-white/60 px-3 py-1.5 text-xs font-semibold text-charcoal-700">
