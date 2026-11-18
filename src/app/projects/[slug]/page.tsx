@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import CaseStudyView from "@/components/case-study/CaseStudyView";
+import SiteFooter from "@/components/home/SiteFooter";
+import { getSiteSettings } from "@/lib/content/queries";
 import {
   getPublishedCaseStudy,
   getPublishedProjects,
@@ -56,17 +58,25 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   const project = await getPublishedCaseStudy(slug);
   if (!project) notFound();
 
-  return (
-    <main className="min-h-screen bg-slate-50">
-      <CaseStudyView project={project} />
+  // Same footer as the homepage; if settings can't load, keep a plain footer
+  // rather than failing a page that otherwise rendered fine.
+  const settings = await getSiteSettings().catch(() => null);
 
-      <footer className="border-t border-charcoal-200 bg-white py-6">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <p className="text-center text-sm text-charcoal-500">
+  return (
+    <div className="bg-dots min-h-screen">
+      <main>
+        <CaseStudyView project={project} />
+      </main>
+
+      {settings ? (
+        <SiteFooter settings={settings} />
+      ) : (
+        <footer className="mx-auto max-w-6xl px-3 pb-10 sm:px-6">
+          <p className="text-center text-sm text-charcoal-600">
             © {new Date().getFullYear()} {OWNER}
           </p>
-        </div>
-      </footer>
-    </main>
+        </footer>
+      )}
+    </div>
   );
 }

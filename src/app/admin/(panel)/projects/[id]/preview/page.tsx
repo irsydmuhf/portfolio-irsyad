@@ -46,7 +46,7 @@ export default async function PreviewPage({
           ← Back to editor
         </Link>
       </div>
-      <div className="bg-slate-50">
+      <div className="bg-dots">
         <CaseStudyView project={project} backHref="/admin/projects" />
       </div>
     </div>

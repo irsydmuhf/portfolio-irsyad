@@ -33,15 +33,15 @@ export default function ProjectProcessFlow({ steps }: { steps: Step[] }) {
         const endOfRow = (i + 1) % cols === 0;
         return (
           <li key={i} className="relative">
-            <div className="h-full rounded-lg border border-navy-200 bg-navy-50 p-4">
-              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-orange-500 text-xs font-bold text-white">
+            <div className="h-full rounded-[1.5rem] bg-brand-50 p-5 ring-1 ring-black/5">
+              <span className="grid h-8 w-8 place-items-center rounded-[0.7rem] bg-brand-500 font-display text-sm font-extrabold text-white shadow-[inset_0_-3px_0_rgba(0,0,0,.2),inset_0_2px_0_rgba(255,255,255,.35)]">
                 {i + 1}
               </span>
-              <h3 className="mt-3 text-base font-semibold text-navy-900">
+              <h3 className="mt-3 font-display text-base font-bold leading-snug text-ink">
                 {step.title}
               </h3>
               {step.description ? (
-                <p className="mt-1 text-sm text-navy-600">{step.description}</p>
+                <p className="mt-1.5 text-sm leading-relaxed text-charcoal-600">{step.description}</p>
               ) : null}
             </div>
 
@@ -49,14 +49,14 @@ export default function ProjectProcessFlow({ steps }: { steps: Step[] }) {
               <>
                 <span
                   aria-hidden="true"
-                  className="mt-2 flex justify-center text-orange-500 md:hidden"
+                  className="mt-2 flex justify-center text-brand-400 md:hidden"
                 >
                   <ArrowDown className="h-5 w-5" />
                 </span>
                 {!endOfRow ? (
                   <span
                     aria-hidden="true"
-                    className="absolute -right-6 top-1/2 hidden -translate-y-1/2 text-orange-500 md:block"
+                    className="absolute -right-6 top-1/2 hidden -translate-y-1/2 text-brand-400 md:block"
                   >
                     <ArrowRight className="h-5 w-5" />
                   </span>

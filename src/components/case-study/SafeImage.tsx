@@ -21,7 +21,7 @@ export default function SafeImage({
       <div
         role="img"
         aria-label={alt}
-        className={`flex min-h-32 items-center justify-center bg-navy-100 p-4 text-center text-sm text-navy-500 ${className}`}
+        className={`flex min-h-32 items-center justify-center bg-charcoal-100 p-4 text-center text-sm text-charcoal-500 ${className}`}
       >
         Image unavailable
       </div>
