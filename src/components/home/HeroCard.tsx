@@ -68,37 +68,103 @@ function LogoGlyph({ icon, size, color }: { icon: SimpleIcon; size: number; colo
 
 /* ----------------------------------------------------------------- monitor */
 
+export interface HeroScreen {
+  line1: string;
+  line2: string;
+  query: string;
+}
+
+export interface HeroTag {
+  text: string;
+  url: string;
+}
+
+const DEFAULT_SCREEN: HeroScreen = { line1: "PORT", line2: "FOLIO", query: "SELECT insight FROM data" };
+const DEFAULT_TAG: HeroTag = { text: "Insights", url: "" };
+
+/** Shrinks the screen title as lines get longer so they stay inside the screen. */
+function titleFontSize(lines: string[]): string {
+  const longest = Math.max(5, ...lines.map((l) => l.length));
+  const k = 5 / longest;
+  return `clamp(${(3 * k).toFixed(2)}rem, ${(13 * k).toFixed(2)}vw, ${(6.25 * k).toFixed(2)}rem)`;
+}
+
+/** Red tag on the monitor's right edge. Empty text hides it; a URL makes it a link. */
+function RedTag({ tag }: { tag: HeroTag }) {
+  const text = tag.text.trim();
+  if (!text) return null;
+  const cls =
+    "absolute -right-3 bottom-10 hidden rotate-[-18deg] rounded-md bg-coral-500 px-2.5 py-1 font-display text-[10px] font-bold uppercase tracking-wider text-white shadow-md sm:block";
+  const url = tag.url.trim();
+  if (!url) {
+    return (
+      <div aria-hidden="true" className={cls}>
+        {text} ›
+      </div>
+    );
+  }
+  const external = /^https?:\/\//i.test(url);
+  const linkCls = `${cls} transition-transform hover:rotate-[-12deg] hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white`;
+  return external ? (
+    <a href={url} target="_blank" rel="noopener noreferrer" className={linkCls}>
+      {text} ›
+    </a>
+  ) : url.startsWith("/") ? (
+    <Link href={url} className={linkCls}>
+      {text} ›
+    </Link>
+  ) : (
+    <a href={url} className={linkCls}>
+      {text} ›
+    </a>
+  );
+}
+
 function Monitor({
   roleLine,
   printerProject,
+  screen,
+  tag,
 }: {
   roleLine: string;
   printerProject: PrinterProject | null;
+  screen: HeroScreen;
+  tag: HeroTag;
 }) {
+  // Both title lines empty would leave a blank screen, so fall back to the default.
+  const lines = [screen.line1, screen.line2].filter((l) => l.trim());
+  const titleLines = lines.length > 0 ? lines : [DEFAULT_SCREEN.line1, DEFAULT_SCREEN.line2];
   return (
     <div className="relative z-20 mx-auto w-[min(80vw,500px)]">
       {/* antenna bump */}
       <div aria-hidden="true" className="absolute -top-5 left-1/2 h-8 w-28 -translate-x-1/2 rounded-t-[2rem] bg-brand-300 shadow-[inset_0_4px_0_rgba(255,255,255,.5)]" />
 
-      {/* bezel (decorative; the printer paper below may be a link, so only this part is hidden) */}
-      <div aria-hidden="true" className="relative rounded-[2.4rem] bg-gradient-to-b from-brand-400 to-brand-600 p-3.5 shadow-[inset_0_-12px_0_rgba(0,0,0,.18),inset_0_6px_0_rgba(255,255,255,.35),0_40px_50px_-28px_rgba(20,40,120,.75)] sm:p-5">
+      {/* bezel: its decorative children are hidden one by one, because the red tag and the printer paper can be links */}
+      <div className="relative rounded-[2.4rem] bg-gradient-to-b from-brand-400 to-brand-600 p-3.5 shadow-[inset_0_-12px_0_rgba(0,0,0,.18),inset_0_6px_0_rgba(255,255,255,.35),0_40px_50px_-28px_rgba(20,40,120,.75)] sm:p-5">
         {/* screen */}
-        <div className="bg-dot-matrix relative overflow-hidden rounded-[1.6rem] bg-[#121418] px-6 pb-5 pt-8 shadow-[inset_0_0_0_3px_rgba(0,0,0,.6),inset_0_10px_30px_rgba(0,0,0,.6)] sm:px-10 sm:pb-6 sm:pt-10">
-          <p className="font-display text-[clamp(3rem,13vw,6.25rem)] font-black leading-[0.86] tracking-tight text-white [text-shadow:0_4px_0_rgba(0,0,0,.45)]">
-            PORT
-            <br />
-            FOLIO
+        <div aria-hidden="true" className="bg-dot-matrix relative overflow-hidden rounded-[1.6rem] bg-[#121418] px-6 pb-5 pt-8 shadow-[inset_0_0_0_3px_rgba(0,0,0,.6),inset_0_10px_30px_rgba(0,0,0,.6)] sm:px-10 sm:pb-6 sm:pt-10">
+          <p
+            className="font-display font-black uppercase leading-[0.86] tracking-tight text-white [text-shadow:0_4px_0_rgba(0,0,0,.45)]"
+            style={{ fontSize: titleFontSize(titleLines) }}
+          >
+            {titleLines.map((line, i) => (
+              <span key={i} className="block">
+                {line}
+              </span>
+            ))}
           </p>
-          <p className="mt-4 truncate font-mono text-[11px] text-brand-300 sm:text-xs">
-            <span className="text-mint-300">&gt;</span> SELECT insight FROM data
-            <span className="animate-blink ml-0.5 inline-block h-3 w-1.5 translate-y-0.5 bg-brand-300" />
-          </p>
+          {screen.query ? (
+            <p className="mt-4 truncate font-mono text-[11px] text-brand-300 sm:text-xs">
+              <span className="text-mint-300">&gt;</span> {screen.query}
+              <span className="animate-blink ml-0.5 inline-block h-3 w-1.5 translate-y-0.5 bg-brand-300" />
+            </p>
+          ) : null}
           {/* screen glare */}
           <div className="pointer-events-none absolute -right-10 -top-16 h-40 w-56 rotate-12 rounded-full bg-white/5 blur-xl" />
         </div>
 
         {/* sticky note */}
-        <div className="absolute -top-4 right-4 rotate-[8deg] sm:-top-5 sm:right-8">
+        <div aria-hidden="true" className="absolute -top-4 right-4 rotate-[8deg] sm:-top-5 sm:right-8">
           <div className="absolute -top-2 left-1/2 h-4 w-10 -translate-x-1/2 -rotate-6 bg-white/70" />
           <div className="w-28 bg-sun-400 px-3 py-2.5 text-center text-balance font-display text-[11px] font-semibold leading-tight text-ink shadow-[0_8px_14px_-6px_rgba(0,0,0,.35)] sm:w-32 sm:text-xs">
             {roleLine || "Data Analyst & Engineer"}
@@ -106,7 +172,7 @@ function Monitor({
         </div>
 
         {/* scalloped badge, left */}
-        <div className="absolute -left-7 top-[38%] hidden -rotate-12 sm:block">
+        <div aria-hidden="true" className="absolute -left-7 top-[38%] hidden -rotate-12 sm:block">
           <div
             className="grid h-[4.5rem] w-[4.5rem] place-items-center bg-white shadow-[0_10px_18px_-8px_rgba(20,40,120,.5)]"
             style={{
@@ -120,10 +186,7 @@ function Monitor({
 
         <SideDial />
 
-        {/* red tag */}
-        <div className="absolute -right-3 bottom-10 hidden rotate-[-18deg] rounded-md bg-coral-500 px-2.5 py-1 font-display text-[10px] font-bold uppercase tracking-wider text-white shadow-md sm:block">
-          Insights ›
-        </div>
+        <RedTag tag={tag} />
       </div>
 
       <Stand project={printerProject} />
@@ -138,7 +201,7 @@ function Monitor({
  */
 function SideDial() {
   return (
-    <div className="absolute left-full top-[36%] hidden -translate-x-0.5 items-center sm:flex">
+    <div aria-hidden="true" className="absolute left-full top-[36%] hidden -translate-x-0.5 items-center sm:flex">
       {/* collar where the dial meets the case */}
       <div
         className="h-12 w-2 rounded-r-sm"
@@ -297,7 +360,7 @@ function Receipt({ project }: { project: PrinterProject | null }) {
 /** Front-view mouse: a dome resting on the desk top. */
 function Mouse() {
   return (
-    <div className="absolute bottom-[38%] right-[calc(50%+11.5rem)] hidden sm:block">
+    <div className="absolute bottom-[38%] left-[calc(50%+11.5rem)] hidden sm:block">
       <div className="absolute -bottom-1 inset-x-0.5 h-2.5 rounded-[50%] bg-brand-900/30 blur-[3px]" />
       <div
         className="relative h-8 w-16 md:h-9 md:w-20"
@@ -318,7 +381,7 @@ function Mouse() {
 /** Front-view mug standing on the desk top, rim tilted slightly toward us. */
 function Mug() {
   return (
-    <div className="absolute bottom-[32%] left-[calc(50%+11.5rem)] hidden sm:block">
+    <div className="absolute bottom-[32%] right-[calc(50%+11.5rem)] hidden sm:block">
       <div className="absolute -bottom-1.5 -left-1 h-3 w-[4.25rem] rounded-[50%] bg-brand-900/25 blur-[3px]" />
       {/* handle, tucked behind the body */}
       <div className="absolute -right-4 top-4 h-8 w-6 rounded-r-full border-[5px] border-l-0 border-[#e6ebf4]" />
@@ -378,12 +441,16 @@ export default function HeroCard({
   location,
   roleLine,
   printerProject = null,
+  screen = DEFAULT_SCREEN,
+  tag = DEFAULT_TAG,
 }: {
   name: string;
   roleLine: string;
   availability: string;
   location: string;
   printerProject?: PrinterProject | null;
+  screen?: HeroScreen;
+  tag?: HeroTag;
 }) {
   const year = String(new Date().getFullYear());
   const firstName = name.split(" ")[0] ?? name;
@@ -488,7 +555,7 @@ export default function HeroCard({
 
         {/* monitor on desk */}
         <div className="relative z-10 mt-14 sm:mt-16">
-          <Monitor roleLine={roleLine} printerProject={printerProject} />
+          <Monitor roleLine={roleLine} printerProject={printerProject} screen={screen} tag={tag} />
           <div aria-hidden="true">
             <Desk firstName={firstName} />
           </div>

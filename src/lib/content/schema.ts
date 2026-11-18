@@ -35,6 +35,20 @@ const pathOrUrlOrEmpty = z
     "Use a path starting with / or a URL starting with https://"
   );
 
+/** In-site path ("/x" or "#x", not protocol-relative "//x"), http(s) URL, or empty. */
+const linkOrEmpty = z
+  .string()
+  .trim()
+  .max(300)
+  .refine(
+    (v) =>
+      v === "" ||
+      (v.startsWith("/") && !v.startsWith("//")) ||
+      v.startsWith("#") ||
+      isValidUrl(v),
+    "Use a path like /projects or #projects, or a URL starting with https://"
+  );
+
 /** Array of chips/lines: empty entries are dropped, not rejected. */
 const stringList = (maxItems: number, maxLen: number) =>
   z
@@ -70,6 +84,12 @@ export const settingsSchema = z.object({
   qrTarget: qrTargetSchema.default("linkedin"),
   // project shown on the paper in the hero printer ("" = default paper)
   printerProjectId: z.union([z.string().uuid(), z.literal("")]).default(""),
+  // hero monitor screen (two title lines + query line) and the red tag
+  screenLine1: text(10).default("PORT"),
+  screenLine2: text(10).default("FOLIO"),
+  screenQuery: text(40).default("SELECT insight FROM data"),
+  tagText: text(16).default("Insights"),
+  tagUrl: linkOrEmpty.default(""),
   // homepage header
   availabilityText: text(80).default(""),
   headline: text(120).default(""),

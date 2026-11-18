@@ -24,6 +24,11 @@ export interface SettingsRow {
   instagram_url?: string | null;
   qr_target?: string | null;
   printer_project_id?: string | null;
+  screen_line1?: string | null;
+  screen_line2?: string | null;
+  screen_query?: string | null;
+  tag_text?: string | null;
+  tag_url?: string | null;
   location: string;
   avatar_path: string;
   availability_text: string;
@@ -78,6 +83,12 @@ export function toSettings(row: SettingsRow): SettingsData {
     instagramUrl: row.instagram_url ?? "",
     qrTarget: toQrTarget(row.qr_target),
     printerProjectId: row.printer_project_id ?? "",
+    // null/undefined (before migration 011) = the original look; "" is a deliberate blank
+    screenLine1: row.screen_line1 ?? "PORT",
+    screenLine2: row.screen_line2 ?? "FOLIO",
+    screenQuery: row.screen_query ?? "SELECT insight FROM data",
+    tagText: row.tag_text ?? "Insights",
+    tagUrl: row.tag_url ?? "",
     location: row.location ?? "",
     avatarPath: row.avatar_path ?? "",
     availabilityText: row.availability_text ?? "",

@@ -357,6 +357,55 @@ export default function SettingsForm({
         </div>
       </Section>
 
+      <Section
+        title="Hero details"
+        description="The text on the monitor screen and the red tag on its edge."
+      >
+        <div className="grid gap-4 sm:grid-cols-2">
+          <TextInput
+            label="Screen title — line 1"
+            hint="Big text on the monitor, shown in capitals. Up to 10 characters; longer lines shrink to fit."
+            value={data.screenLine1}
+            onChange={(v) => set({ screenLine1: v })}
+            placeholder="PORT"
+            maxLength={10}
+          />
+          <TextInput
+            label="Screen title — line 2"
+            hint="Leave both lines empty to use PORT / FOLIO."
+            value={data.screenLine2}
+            onChange={(v) => set({ screenLine2: v })}
+            placeholder="FOLIO"
+            maxLength={10}
+          />
+          <TextInput
+            label="Screen query line"
+            hint="The small terminal line under the title. Leave empty to hide it."
+            value={data.screenQuery}
+            onChange={(v) => set({ screenQuery: v })}
+            placeholder="SELECT insight FROM data"
+            maxLength={40}
+          />
+          <div className="hidden sm:block" />
+          <TextInput
+            label="Red tag text"
+            hint="The small red tag on the monitor's right edge. Leave empty to hide it."
+            value={data.tagText}
+            onChange={(v) => set({ tagText: v })}
+            placeholder="Insights"
+            maxLength={16}
+          />
+          <TextInput
+            label="Red tag link"
+            hint="Optional. #projects, /projects/some-slug or https://… Empty = not clickable."
+            value={data.tagUrl}
+            onChange={(v) => set({ tagUrl: v })}
+            placeholder="#projects"
+            maxLength={300}
+          />
+        </div>
+      </Section>
+
       <Section title="Contact & resume" description="Let's Connect list and footer links.">
         <div className="grid gap-4 sm:grid-cols-2">
           <TextInput label="Email" required value={data.email} onChange={(v) => set({ email: v })} maxLength={200} />

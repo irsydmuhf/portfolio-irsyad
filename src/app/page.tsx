@@ -37,6 +37,12 @@ export default async function Home() {
           availability={settings.availabilityText}
           location={settings.location}
           printerProject={printerProject}
+          screen={{
+            line1: settings.screenLine1,
+            line2: settings.screenLine2,
+            query: settings.screenQuery,
+          }}
+          tag={{ text: settings.tagText, url: settings.tagUrl }}
         />
 
         <ProfileSection
