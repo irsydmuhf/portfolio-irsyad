@@ -136,6 +136,52 @@ function QrTargetField({
   );
 }
 
+export interface PrinterOption {
+  id: string;
+  title: string;
+  hasCover: boolean;
+}
+
+function PrinterProjectField({
+  value,
+  options,
+  onChange,
+}: {
+  value: string;
+  options: PrinterOption[];
+  onChange: (id: string) => void;
+}) {
+  const picked = options.find((o) => o.id === value);
+  return (
+    <Field
+      label="Project on the printer"
+      hint="The paper coming out of the monitor shows this project's cover and title, and links to its case study."
+    >
+      <select
+        value={picked ? value : ""}
+        onChange={(e) => onChange(e.target.value)}
+        className={INPUT_CLASS}
+      >
+        <option value="">None — default “Monthly Report” paper</option>
+        {options.map((o) => (
+          <option key={o.id} value={o.id}>
+            {o.title}
+          </option>
+        ))}
+      </select>
+      {value && !picked ? (
+        <p role="alert" className="mt-1 text-sm text-amber-700">
+          The saved project is no longer published, so the default paper is shown. Pick another or save “None”.
+        </p>
+      ) : picked && !picked.hasCover ? (
+        <p role="alert" className="mt-1 text-sm text-amber-700">
+          This project has no cover image, so the default paper is shown. Upload a cover in the project editor.
+        </p>
+      ) : null}
+    </Field>
+  );
+}
+
 function AvatarField({
   value,
   onUploaded,
@@ -211,7 +257,13 @@ function AvatarField({
   );
 }
 
-export default function SettingsForm({ initial }: { initial: SettingsData }) {
+export default function SettingsForm({
+  initial,
+  printerOptions,
+}: {
+  initial: SettingsData;
+  printerOptions: PrinterOption[];
+}) {
   const [data, setData] = useState<SettingsData>(initial);
   const [dirty, setDirty] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -296,6 +348,11 @@ export default function SettingsForm({ initial }: { initial: SettingsData }) {
             value={data.tagline}
             onChange={(v) => set({ tagline: v })}
             maxLength={200}
+          />
+          <PrinterProjectField
+            value={data.printerProjectId}
+            options={printerOptions}
+            onChange={(id) => set({ printerProjectId: id })}
           />
         </div>
       </Section>

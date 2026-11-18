@@ -168,6 +168,7 @@ export async function saveSettings(input: unknown): Promise<ActionResult> {
     github_label: d.githubLabel,
     instagram_url: d.instagramUrl,
     qr_target: d.qrTarget,
+    printer_project_id: d.printerProjectId || null,
     location: d.location,
     avatar_path: d.avatarPath,
     availability_text: d.availabilityText,

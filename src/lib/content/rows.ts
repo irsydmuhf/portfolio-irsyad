@@ -23,6 +23,7 @@ export interface SettingsRow {
   github_label: string;
   instagram_url?: string | null;
   qr_target?: string | null;
+  printer_project_id?: string | null;
   location: string;
   avatar_path: string;
   availability_text: string;
@@ -76,6 +77,7 @@ export function toSettings(row: SettingsRow): SettingsData {
     githubLabel: row.github_label ?? "",
     instagramUrl: row.instagram_url ?? "",
     qrTarget: toQrTarget(row.qr_target),
+    printerProjectId: row.printer_project_id ?? "",
     location: row.location ?? "",
     avatarPath: row.avatar_path ?? "",
     availabilityText: row.availability_text ?? "",

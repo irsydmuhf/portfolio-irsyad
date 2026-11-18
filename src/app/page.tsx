@@ -12,6 +12,7 @@ export const revalidate = 300;
 export default async function Home() {
   const {
     settings,
+    printerProject,
     experiences,
     educations,
     skillCategories,
@@ -35,6 +36,7 @@ export default async function Home() {
           roleLine={settings.roleLine}
           availability={settings.availabilityText}
           location={settings.location}
+          printerProject={printerProject}
         />
 
         <ProfileSection

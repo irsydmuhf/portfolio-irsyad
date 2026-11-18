@@ -19,6 +19,7 @@ import {
   getAchievements,
   getEducations,
   getExperiences,
+  getPrinterProject,
   getSiteSettings,
   getSkillCategories,
   getTechStack,
@@ -28,12 +29,14 @@ import type {
   TechItemData,
   EducationData,
   ExperienceData,
+  PrinterProject,
   SettingsData,
   SkillCategoryData,
 } from "./schema";
 
 export interface HomeContent {
   settings: SettingsData;
+  printerProject: PrinterProject | null;
   experiences: ExperienceData[];
   educations: EducationData[];
   skillCategories: SkillCategoryData[];
@@ -69,8 +72,10 @@ export async function getHomeContent(): Promise<HomeContent> {
       getAchievements(),
       getFeaturedProjects(),
     ]);
+    const printerProject = await getPrinterProject(settings.printerProjectId);
     return {
       settings,
+      printerProject,
       experiences,
       educations,
       skillCategories,
@@ -120,6 +125,7 @@ function localHomeContent(): HomeContent {
       githubLabel: "github.com/irsydmuhf",
       instagramUrl: "",
       qrTarget: "linkedin",
+      printerProjectId: "",
       location: "Indonesia",
       avatarPath: "/profile/profile.jpg",
       availabilityText: "Available for Work",
@@ -130,6 +136,7 @@ function localHomeContent(): HomeContent {
       seoTitle: "",
       seoDescription: "",
     },
+    printerProject: null,
     experiences: localExperience.map((e) => ({
       period: e.period,
       role: e.role,

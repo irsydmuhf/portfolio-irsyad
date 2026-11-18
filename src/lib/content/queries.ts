@@ -21,11 +21,13 @@ import {
   type SettingsRow,
   type SkillCategoryRow,
 } from "./rows";
+import { storageUrl } from "@/lib/projects/case-study";
 import type {
   AchievementData,
   TechItemData,
   EducationData,
   ExperienceData,
+  PrinterProject,
   SettingsData,
   SkillCategoryData,
 } from "./schema";
@@ -63,6 +65,36 @@ export const getSiteSettings = cache(async (): Promise<SettingsData> => {
   }
   return toSettings(data as SettingsRow);
 });
+
+/**
+ * The project shown on the hero printer paper. Decorative, so it never throws:
+ * unset, unpublished, deleted, cover-less or any error all resolve to null and
+ * the hero shows the default paper.
+ */
+export const getPrinterProject = cache(
+  async (id: string): Promise<PrinterProject | null> => {
+    if (!id) return null;
+    const { data, error } = await supabase()
+      .from("projects")
+      .select("slug, title, category, cover_storage_path")
+      .eq("id", id)
+      .eq("status", "published")
+      .maybeSingle();
+    if (error) {
+      console.warn("[home] printer project unavailable:", error.message);
+      return null;
+    }
+    const cover = (data?.cover_storage_path as string | null) ?? "";
+    if (!data || !cover) return null;
+    return {
+      slug: data.slug as string,
+      title: data.title as string,
+      category: (data.category as string | null) ?? "",
+      // Uploaded covers are bucket paths; legacy ones may already be URLs/paths.
+      coverUrl: /^(https?:)?\/\//.test(cover) || cover.startsWith("/") ? cover : storageUrl(cover),
+    };
+  }
+);
 
 export const getExperiences = cache(async (): Promise<ExperienceData[]> => {
   const { data, error } = await supabase()

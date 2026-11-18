@@ -1,7 +1,9 @@
 import type { CSSProperties, ReactNode } from "react";
+import Link from "next/link";
 import type { SimpleIcon } from "simple-icons";
 import { siPandas, siPostgresql, siPython } from "simple-icons";
 import { ChartColumnIncreasing } from "lucide-react";
+import type { PrinterProject } from "@/lib/content/schema";
 
 const NAV = [
   { href: "#about", label: "About" },
@@ -66,14 +68,20 @@ function LogoGlyph({ icon, size, color }: { icon: SimpleIcon; size: number; colo
 
 /* ----------------------------------------------------------------- monitor */
 
-function Monitor({ roleLine }: { roleLine: string }) {
+function Monitor({
+  roleLine,
+  printerProject,
+}: {
+  roleLine: string;
+  printerProject: PrinterProject | null;
+}) {
   return (
-    <div className="relative mx-auto w-[min(80vw,500px)]">
+    <div className="relative z-20 mx-auto w-[min(80vw,500px)]">
       {/* antenna bump */}
-      <div className="absolute -top-5 left-1/2 h-8 w-28 -translate-x-1/2 rounded-t-[2rem] bg-brand-300 shadow-[inset_0_4px_0_rgba(255,255,255,.5)]" />
+      <div aria-hidden="true" className="absolute -top-5 left-1/2 h-8 w-28 -translate-x-1/2 rounded-t-[2rem] bg-brand-300 shadow-[inset_0_4px_0_rgba(255,255,255,.5)]" />
 
-      {/* bezel */}
-      <div className="relative rounded-[2.4rem] bg-gradient-to-b from-brand-400 to-brand-600 p-3.5 shadow-[inset_0_-12px_0_rgba(0,0,0,.18),inset_0_6px_0_rgba(255,255,255,.35),0_40px_50px_-28px_rgba(20,40,120,.75)] sm:p-5">
+      {/* bezel (decorative; the printer paper below may be a link, so only this part is hidden) */}
+      <div aria-hidden="true" className="relative rounded-[2.4rem] bg-gradient-to-b from-brand-400 to-brand-600 p-3.5 shadow-[inset_0_-12px_0_rgba(0,0,0,.18),inset_0_6px_0_rgba(255,255,255,.35),0_40px_50px_-28px_rgba(20,40,120,.75)] sm:p-5">
         {/* screen */}
         <div className="bg-dot-matrix relative overflow-hidden rounded-[1.6rem] bg-[#121418] px-6 pb-5 pt-8 shadow-[inset_0_0_0_3px_rgba(0,0,0,.6),inset_0_10px_30px_rgba(0,0,0,.6)] sm:px-10 sm:pb-6 sm:pt-10">
           <p className="font-display text-[clamp(3rem,13vw,6.25rem)] font-black leading-[0.86] tracking-tight text-white [text-shadow:0_4px_0_rgba(0,0,0,.45)]">
@@ -110,12 +118,7 @@ function Monitor({ roleLine }: { roleLine: string }) {
           </div>
         </div>
 
-        {/* side knob, right */}
-        <div className="absolute -right-9 top-[40%] hidden h-[4.5rem] w-[4.5rem] place-items-center rounded-full bg-gradient-to-br from-white to-charcoal-300 shadow-[0_10px_18px_-8px_rgba(0,0,0,.45),inset_0_-4px_0_rgba(0,0,0,.12)] sm:grid">
-          <div className="grid h-10 w-10 place-items-center rounded-full bg-brand-500 shadow-[inset_0_3px_6px_rgba(0,0,0,.35)]">
-            <div className="h-3 w-3 rounded-full bg-brand-200" />
-          </div>
-        </div>
+        <SideDial />
 
         {/* red tag */}
         <div className="absolute -right-3 bottom-10 hidden rotate-[-18deg] rounded-md bg-coral-500 px-2.5 py-1 font-display text-[10px] font-bold uppercase tracking-wider text-white shadow-md sm:block">
@@ -123,51 +126,245 @@ function Monitor({ roleLine }: { roleLine: string }) {
         </div>
       </div>
 
-      {/* neck + printer slot */}
-      <div className="relative mx-auto h-12 w-44 sm:h-14 sm:w-56">
-        <div
-          className="absolute inset-0 bg-gradient-to-b from-brand-500 to-brand-600"
-          style={{ clipPath: "polygon(18% 0, 82% 0, 100% 100%, 0 100%)" }}
-        />
-        <div className="absolute bottom-3 left-1/2 h-1.5 w-28 -translate-x-1/2 rounded-full bg-[#0e1a3f] sm:w-32" />
-        {/* LEDs */}
-        <div className="absolute -right-16 bottom-1 hidden gap-1.5 sm:flex">
-          <span className="h-3 w-4 rounded-sm bg-coral-500 shadow-[inset_0_-2px_0_rgba(0,0,0,.25)]" />
-          <span className="h-3 w-4 rounded-sm bg-[#3ccf6a] shadow-[inset_0_-2px_0_rgba(0,0,0,.25)]" />
-          <span className="h-3 w-4 rounded-sm bg-brand-500 shadow-[inset_0_-2px_0_rgba(0,0,0,.25)]" />
+      <Stand project={printerProject} />
+    </div>
+  );
+}
+
+/**
+ * Volume-style dial sticking out of the monitor's right side. The scene is
+ * drawn straight-on, so the dial shows in profile: collar → knurled silver
+ * barrel → dark lip → blue cap.
+ */
+function SideDial() {
+  return (
+    <div className="absolute left-full top-[36%] hidden -translate-x-0.5 items-center sm:flex">
+      {/* collar where the dial meets the case */}
+      <div
+        className="h-12 w-2 rounded-r-sm"
+        style={{ background: "linear-gradient(to bottom,#d3d9e3,#8b94a6)" }}
+      />
+      {/* knurled silver barrel */}
+      <div
+        className="relative h-20 w-7 rounded-l-[4px] rounded-r-[10px] shadow-[0_12px_16px_-10px_rgba(0,0,0,.5)]"
+        style={{
+          background:
+            "repeating-linear-gradient(to bottom,rgba(20,30,50,.07) 0 1px,transparent 1px 5px),linear-gradient(to bottom,#ffffff 0%,#eef1f6 26%,#c3c9d5 70%,#8f98aa 100%)",
+        }}
+      >
+        <div className="absolute inset-x-1 top-2 h-2 rounded-full bg-white/80 blur-[1px]" />
+      </div>
+      {/* dark lip of the dial face */}
+      <div className="-ml-1 h-[3.75rem] w-1.5 rounded-r-full bg-[#1b1f2a]" />
+      {/* blue cap */}
+      <div
+        className="-ml-px h-10 w-2.5 rounded-r-full"
+        style={{ background: "linear-gradient(to bottom,#9db8ff,#3a6cf4 55%,#1f42ad)" }}
+      />
+    </div>
+  );
+}
+
+/** Neck + base. The base carries the printer slot and the three buttons. */
+function Stand({ project }: { project: PrinterProject | null }) {
+  return (
+    <div className="relative flex flex-col items-center">
+      {/* neck */}
+      <div
+        aria-hidden="true"
+        className="h-6 w-32 bg-gradient-to-b from-brand-700 to-brand-500 sm:h-7 sm:w-40"
+        style={{ clipPath: "polygon(14% 0, 86% 0, 100% 100%, 0 100%)" }}
+      />
+
+      {/* base */}
+      <div className="relative h-12 w-56 sm:h-16 sm:w-80">
+        {/* contact shadow on the desk */}
+        <div aria-hidden="true" className="absolute -bottom-1.5 inset-x-3 h-4 rounded-[50%] bg-brand-900/35 blur-[4px]" />
+        <div aria-hidden="true" className="absolute inset-0 overflow-hidden rounded-b-lg rounded-t-xl bg-gradient-to-b from-brand-500 to-brand-600 shadow-[inset_0_-5px_0_rgba(0,0,0,.18)]">
+          {/* top face, seen slightly from above */}
+          <div className="absolute inset-x-0 top-0 h-2 bg-gradient-to-b from-brand-300 to-brand-400 sm:h-2.5" />
         </div>
+
+        {/* printer slot */}
+        <div aria-hidden="true" className="absolute left-1/2 top-3.5 h-2 w-32 -translate-x-1/2 rounded-full bg-[#0e1a3f] shadow-[inset_0_2px_3px_rgba(0,0,0,.6),0_1px_0_rgba(255,255,255,.3)] sm:top-5 sm:h-2.5 sm:w-44" />
+
+        {/* buttons */}
+        <div aria-hidden="true" className="absolute bottom-2 right-2 flex gap-1 rounded-md bg-brand-800/45 p-1 shadow-[inset_0_1px_2px_rgba(0,0,0,.3)] sm:bottom-3 sm:right-3 sm:gap-1.5">
+          {["bg-coral-500", "bg-[#3ccf6a]", "bg-brand-300"].map((color) => (
+            <span
+              key={color}
+              className={`h-2 w-3 rounded-[3px] sm:h-3 sm:w-[18px] ${color} shadow-[inset_0_1px_0_rgba(255,255,255,.55),inset_0_-2px_0_rgba(0,0,0,.25)]`}
+            />
+          ))}
+        </div>
+
+        <Receipt project={project} />
       </div>
     </div>
   );
 }
 
-/** The "report" sliding out of the printer slot: a tiny dashboard printout. */
-function Receipt() {
+const PAPER =
+  "origin-top rotate-[-4deg] rounded-b-md bg-white px-2.5 pb-3 pt-3 shadow-[0_14px_20px_-10px_rgba(0,0,0,.35)] ring-1 ring-black/5 sm:px-3 sm:pb-4";
+
+/** Default paper (no project picked): a tiny dashboard printout. Decorative. */
+function DefaultPaper() {
   const bars = [38, 62, 45, 80, 58, 92];
   return (
-    <div className="animate-print absolute left-1/2 top-0 z-10 w-32 -translate-x-1/2 sm:w-40">
-      <div className="rotate-[-6deg] rounded-b-md bg-white px-3 pb-4 pt-3 shadow-[0_14px_20px_-10px_rgba(0,0,0,.35)] ring-1 ring-black/5">
-        <p className="text-[7px] font-bold uppercase tracking-wider text-ink sm:text-[8px]">
-          Monthly Report
+    <div aria-hidden="true" className={PAPER}>
+      <p className="text-[7px] font-bold uppercase tracking-wider text-ink sm:text-[8px]">
+        Monthly Report
+      </p>
+      <div className="mt-2 flex h-10 items-end gap-1 sm:h-12">
+        {bars.map((h, i) => (
+          <span
+            key={i}
+            className={`flex-1 rounded-t-sm ${i === bars.length - 1 ? "bg-coral-500" : "bg-brand-400"}`}
+            style={{ height: `${h}%` }}
+          />
+        ))}
+      </div>
+      <div className="mt-2 space-y-1">
+        <div className="h-1 w-full rounded bg-charcoal-200" />
+        <div className="h-1 w-4/5 rounded bg-charcoal-200" />
+        <div className="h-1 w-3/5 rounded bg-charcoal-200" />
+      </div>
+      <div className="mt-2 flex justify-between text-[7px] font-semibold text-charcoal-500">
+        <span>GMV</span>
+        <span className="text-[#2bab5a]">▲ 24%</span>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Paper for the project picked in admin. Text always sits on the white paper,
+ * never over the thumbnail, so it stays readable whatever the image looks like.
+ * The thumbnail gets its own hairline ring so a white screenshot doesn't melt
+ * into the paper. Links to the case study.
+ */
+function ProjectPaper({ project }: { project: PrinterProject }) {
+  return (
+    <Link
+      href={`/projects/${project.slug}`}
+      aria-label={`Featured project: ${project.title}`}
+      className={`${PAPER} pointer-events-auto block transition-transform duration-300 hover:-translate-y-0.5 hover:rotate-[-2deg] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600`}
+    >
+      <p className="text-[7px] font-bold uppercase tracking-wider text-brand-600 sm:text-[8px]">
+        Featured project
+      </p>
+      {/* gradient shows through if the image fails to load (no broken icon) */}
+      <div className="relative mt-1.5 aspect-[16/10] overflow-hidden rounded-[5px] bg-gradient-to-br from-brand-400 to-brand-600 ring-1 ring-black/15">
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${JSON.stringify(project.coverUrl)})` }}
+        />
+      </div>
+      <p className="mt-1.5 line-clamp-2 font-display text-[9px] font-extrabold leading-tight text-ink sm:text-[11px]">
+        {project.title}
+      </p>
+      {project.category && (
+        <p className="mt-0.5 truncate text-[6px] font-bold uppercase tracking-wider text-charcoal-500 sm:text-[7px]">
+          {project.category}
         </p>
-        <div className="mt-2 flex h-10 items-end gap-1 sm:h-12">
-          {bars.map((h, i) => (
-            <span
-              key={i}
-              className={`flex-1 rounded-t-sm ${i === bars.length - 1 ? "bg-coral-500" : "bg-brand-400"}`}
-              style={{ height: `${h}%` }}
-            />
-          ))}
+      )}
+      <div className="mt-2 space-y-1" aria-hidden="true">
+        <div className="h-1 w-full rounded bg-charcoal-200" />
+        <div className="h-1 w-3/5 rounded bg-charcoal-200" />
+      </div>
+    </Link>
+  );
+}
+
+/**
+ * The paper sliding out of the printer slot. The wrapper starts at the slot's
+ * centre line and clips, so the paper looks fed out of the slot rather than
+ * pasted over it. The wrapper ignores the pointer; only the link opts back in.
+ */
+function Receipt({ project }: { project: PrinterProject | null }) {
+  return (
+    <div className="pointer-events-none absolute left-1/2 top-[18px] z-10 h-72 w-36 -translate-x-1/2 overflow-hidden sm:top-[25px] sm:w-52">
+      <div className="animate-print mx-auto w-28 sm:w-40">
+        {project ? <ProjectPaper project={project} /> : <DefaultPaper />}
+      </div>
+    </div>
+  );
+}
+
+/* -------------------------------------------------------------------- desk */
+
+/** Front-view mouse: a dome resting on the desk top. */
+function Mouse() {
+  return (
+    <div className="absolute bottom-[38%] right-[calc(50%+11.5rem)] hidden sm:block">
+      <div className="absolute -bottom-1 inset-x-0.5 h-2.5 rounded-[50%] bg-brand-900/30 blur-[3px]" />
+      <div
+        className="relative h-8 w-16 md:h-9 md:w-20"
+        style={{
+          borderRadius: "50% 50% 44% 44% / 88% 88% 12% 12%",
+          background: "linear-gradient(to bottom,#7a9dff,#3a6cf4 55%,#2753d8)",
+          boxShadow: "inset 0 3px 0 rgba(255,255,255,.35), inset 0 -4px 0 rgba(0,0,0,.2)",
+        }}
+      >
+        {/* scroll wheel peeking over the top */}
+        <div className="absolute left-1/2 top-0 h-2 w-1.5 -translate-x-1/2 -translate-y-1/3 rounded-full bg-brand-900" />
+        <div className="absolute left-[20%] top-[22%] h-1.5 w-5 rounded-full bg-white/35 blur-[1px]" />
+      </div>
+    </div>
+  );
+}
+
+/** Front-view mug standing on the desk top, rim tilted slightly toward us. */
+function Mug() {
+  return (
+    <div className="absolute bottom-[32%] left-[calc(50%+11.5rem)] hidden sm:block">
+      <div className="absolute -bottom-1.5 -left-1 h-3 w-[4.25rem] rounded-[50%] bg-brand-900/25 blur-[3px]" />
+      {/* handle, tucked behind the body */}
+      <div className="absolute -right-4 top-4 h-8 w-6 rounded-r-full border-[5px] border-l-0 border-[#e6ebf4]" />
+      <div
+        className="relative h-16 w-12 overflow-hidden rounded-b-[14px] rounded-t-[3px] shadow-[0_8px_12px_-8px_rgba(0,0,0,.35)]"
+        style={{ background: "linear-gradient(to right,#ffffff 0%,#ffffff 50%,#dfe5f0 100%)" }}
+      >
+        <div className="absolute inset-x-0 top-6 h-4 bg-gradient-to-r from-coral-500 via-coral-500 to-coral-600" />
+      </div>
+      {/* rim + coffee */}
+      <div className="absolute -top-1.5 left-0 h-3 w-12 rounded-[50%] bg-[#f3f6fb] ring-1 ring-black/5">
+        <div className="absolute inset-x-[3px] inset-y-[2px] rounded-[50%] bg-gradient-to-b from-[#3f2414] to-[#7a4a2a]" />
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Desk block: a shallow top surface (what the monitor, mouse and mug stand on)
+ * over the gridded front face. Pulled up by half the top's depth so the
+ * monitor base lands mid-surface.
+ */
+function Desk({ firstName }: { firstName: string }) {
+  return (
+    <div className="relative z-10 mx-auto -mt-3.5 w-[min(92%,680px)] sm:-mt-[18px]">
+      {/* top surface */}
+      <div
+        className="h-7 bg-gradient-to-b from-[#e7ecf6] to-[#f7f9fe] sm:h-9"
+        style={{ clipPath: "polygon(2.5% 0, 97.5% 0, 100% 100%, 0 100%)" }}
+      />
+      {/* front edge */}
+      <div className="h-[3px] bg-white shadow-[0_1px_0_rgba(20,40,110,.08)]" />
+      {/* front face */}
+      <div className="bg-grid-fine relative h-28 bg-white shadow-[inset_0_-30px_40px_-30px_rgba(60,90,170,.25)] sm:h-36">
+        {/* name plate */}
+        <div className="absolute bottom-5 right-[8%] rounded-xl bg-brand-500 p-1 shadow-[inset_0_-4px_0_rgba(0,0,0,.2),0_8px_14px_-8px_rgba(20,40,120,.6)] sm:bottom-8">
+          <div className="rounded-lg border-2 border-white/90 px-3 py-1 font-display text-sm font-extrabold uppercase tracking-wide text-white sm:px-4 sm:text-lg">
+            {firstName}
+          </div>
         </div>
-        <div className="mt-2 space-y-1">
-          <div className="h-1 w-full rounded bg-charcoal-200" />
-          <div className="h-1 w-4/5 rounded bg-charcoal-200" />
-          <div className="h-1 w-3/5 rounded bg-charcoal-200" />
-        </div>
-        <div className="mt-2 flex justify-between text-[7px] font-semibold text-charcoal-500">
-          <span>GMV</span>
-          <span className="text-[#2bab5a]">▲ 24%</span>
-        </div>
+      </div>
+
+      {/* things standing on the top surface */}
+      <div className="absolute inset-x-0 top-0 h-7 sm:h-9">
+        <Mouse />
+        <Mug />
       </div>
     </div>
   );
@@ -180,11 +377,13 @@ export default function HeroCard({
   availability,
   location,
   roleLine,
+  printerProject = null,
 }: {
   name: string;
   roleLine: string;
   availability: string;
   location: string;
+  printerProject?: PrinterProject | null;
 }) {
   const year = String(new Date().getFullYear());
   const firstName = name.split(" ")[0] ?? name;
@@ -288,32 +487,10 @@ export default function HeroCard({
         </div>
 
         {/* monitor on desk */}
-        <div aria-hidden="true" className="relative z-10 mt-14 sm:mt-16">
-          <Monitor roleLine={roleLine} />
-
-          {/* desk block */}
-          <div className="relative mx-auto h-32 w-[min(92%,680px)] sm:h-44">
-            <div className="bg-grid-fine absolute inset-0 rounded-t-2xl bg-white shadow-[inset_0_6px_0_rgba(255,255,255,1),inset_0_-30px_40px_-30px_rgba(60,90,170,.25)] ring-1 ring-black/5" />
-            <div className="absolute inset-x-0 top-0 h-3 rounded-t-2xl bg-gradient-to-b from-white to-[#eef1f7]" />
-            <Receipt />
-
-            {/* mouse */}
-            <div className="absolute -top-6 left-[12%] h-9 w-16 rounded-[50%] bg-gradient-to-b from-brand-400 to-brand-600 shadow-[inset_0_-4px_0_rgba(0,0,0,.2),0_8px_12px_-6px_rgba(20,40,120,.5)] sm:left-[16%] sm:h-10 sm:w-20" />
-
-            {/* mug */}
-            <div className="absolute -top-14 right-[14%] hidden sm:block">
-              <div className="relative h-16 w-12 rounded-b-xl rounded-t-md bg-white shadow-[inset_-6px_0_0_rgba(0,0,0,.06),0_10px_14px_-8px_rgba(0,0,0,.35)] ring-1 ring-black/5">
-                <div className="absolute inset-x-0 top-5 h-4 bg-coral-500" />
-                <div className="absolute -right-3 top-4 h-7 w-4 rounded-r-full border-4 border-l-0 border-white" />
-              </div>
-            </div>
-
-            {/* name plate */}
-            <div className="absolute bottom-5 right-[8%] rounded-xl bg-brand-500 p-1 shadow-[inset_0_-4px_0_rgba(0,0,0,.2),0_8px_14px_-8px_rgba(20,40,120,.6)] sm:bottom-8">
-              <div className="rounded-lg border-2 border-white/90 px-3 py-1 font-display text-sm font-extrabold uppercase tracking-wide text-white sm:px-4 sm:text-lg">
-                {firstName}
-              </div>
-            </div>
+        <div className="relative z-10 mt-14 sm:mt-16">
+          <Monitor roleLine={roleLine} printerProject={printerProject} />
+          <div aria-hidden="true">
+            <Desk firstName={firstName} />
           </div>
         </div>
       </div>

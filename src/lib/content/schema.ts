@@ -68,6 +68,8 @@ export const settingsSchema = z.object({
   avatarPath: pathOrUrlOrEmpty.default(""),
   // ID card QR code destination ("none" hides the QR)
   qrTarget: qrTargetSchema.default("linkedin"),
+  // project shown on the paper in the hero printer ("" = default paper)
+  printerProjectId: z.union([z.string().uuid(), z.literal("")]).default(""),
   // homepage header
   availabilityText: text(80).default(""),
   headline: text(120).default(""),
@@ -81,6 +83,14 @@ export const settingsSchema = z.object({
 });
 
 export type SettingsData = z.output<typeof settingsSchema>;
+
+/** Resolved project for the hero printer paper (published + has a cover). */
+export interface PrinterProject {
+  slug: string;
+  title: string;
+  category: string;
+  coverUrl: string;
+}
 
 // -------------------------------------------------------------- experiences
 export const experienceSchema = z.object({

@@ -125,14 +125,13 @@
     }
   }
 
+  /* Paper is clipped at the printer slot, so it slides out from fully hidden */
   @keyframes print {
     from {
-      transform: translateY(-55%);
-      opacity: 0;
+      transform: translateY(-100%);
     }
     to {
       transform: translateY(0);
-      opacity: 1;
     }
   }
 }
