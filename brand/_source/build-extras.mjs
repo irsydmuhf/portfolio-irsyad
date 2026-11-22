@@ -12,7 +12,7 @@ const sharp = req("sharp");
 const si = req("simple-icons");
 const bold = readFileSync(ROOT + "/assets/fonts/Poppins-Bold.ttf");
 const medium = readFileSync(ROOT + "/assets/fonts/Poppins-Medium.ttf");
-const URL_SITE = "https://irsydmuhf.vercel.app";
+const URL_SITE = "https://irsyadmuhf.vercel.app";
 
 /* ------------------------------------------------------------------ palette */
 // Validated with the dataviz skill's validate_palette.js:

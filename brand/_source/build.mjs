@@ -17,7 +17,7 @@ const INFO = {
   name: "Irsyad Muhamad Firdaus",
   role: "Data Analyst & Engineer",
   tagline: "Turning complex datasets into confident business decisions.",
-  url: "irsydmuhf.vercel.app",
+  url: "irsyadmuhf.vercel.app",
   email: "irsyad.muhf@gmail.com",
   linkedin: "linkedin.com/in/irsyadmuhf",
   github: "github.com/irsydmuhf",

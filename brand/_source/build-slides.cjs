@@ -23,7 +23,7 @@ const THEME = {
   name: "Irsyad", headFontFace: "Poppins", bodyFontFace: "Poppins",
   colors: { dk1: COL.ink, lt1: COL.white, dk2: COL.brandDeep, lt2: COL.soft, accent1: SERIES[0], accent2: SERIES[1], accent3: SERIES[2], accent4: SERIES[3], accent5: SERIES[4], accent6: SERIES[5], hlink: COL.brand, folHlink: SERIES[4] },
 };
-const INFO = { name: "Irsyad Muhamad Firdaus", role: "Data Analyst & Engineer", url: "irsydmuhf.vercel.app", email: "irsyad.muhf@gmail.com", linkedin: "linkedin.com/in/irsyadmuhf" };
+const INFO = { name: "Irsyad Muhamad Firdaus", role: "Data Analyst & Engineer", url: "irsyadmuhf.vercel.app", email: "irsyad.muhf@gmail.com", linkedin: "linkedin.com/in/irsyadmuhf" };
 
 /* ------------------------------------------------------------------ images */
 const W = 13.333, H = 7.5; // LAYOUT_WIDE, inches
@@ -235,7 +235,7 @@ const pxSize = (p) => sharp(p).metadata().then((m) => ({ w: m.width, h: m.height
     { text: INFO.url },
   ], { x: 0.8, y: 3.6, w: 5.2, h: 1.3, fontSize: 16, color: COL.white, margin: 0, valign: "top", isTextBox: true, paraSpaceAfter: 6 });
   s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 0.8, y: 5.05, w: 1.7, h: 1.7, rectRadius: 0.14, fill: { color: COL.white }, line: { color: COL.white }, objectName: "qr-card" });
-  s.addImage({ data: IMG.qr, x: 0.9, y: 5.15, w: 1.5, h: 1.5, objectName: "qr-portfolio", altText: "QR code to irsydmuhf.vercel.app" });
+  s.addImage({ data: IMG.qr, x: 0.9, y: 5.15, w: 1.5, h: 1.5, objectName: "qr-portfolio", altText: "QR code to irsyadmuhf.vercel.app" });
   s.addText("Scan for the full portfolio", { x: 2.75, y: 5.6, w: 3.5, h: 0.6, fontSize: 13, color: COL.white, margin: 0, valign: "middle", isTextBox: true });
 
   /* ------------------------------------------------------------ write + theme */
