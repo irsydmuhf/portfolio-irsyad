@@ -1,6 +1,7 @@
 // Accent version of the site logo (same geometry as src/app/icon.svg, no tile).
 // The ribbon draws in currentColor at `ribbonOpacity`; the dot stays solid sun yellow.
-// The viewBox crops the top of the dot, so place it flush with a container edge.
+// The dot pokes above the viewBox and the tail runs far below it: put the mark in an
+// overflow-hidden container, flush with its top edge, so both get cropped by that container.
 export default function BrandMark({
   className,
   ribbonOpacity = 0.18,
@@ -9,7 +10,7 @@ export default function BrandMark({
   ribbonOpacity?: number;
 }) {
   return (
-    <svg viewBox="0 0 100 100" className={className} aria-hidden="true" focusable="false">
+    <svg viewBox="0 0 100 100" overflow="visible" className={className} aria-hidden="true" focusable="false">
       <defs>
         <linearGradient id="brandmark-stem" gradientUnits="userSpaceOnUse" x1="34" y1="28" x2="41" y2="62">
           <stop offset="0" stopColor="currentColor" />
@@ -26,7 +27,7 @@ export default function BrandMark({
         <path d="M34 34 C35.5 46 38 56 42 63" stroke="url(#brandmark-stem)" />
         <path d="M42 63 C46 70 49 72 53 75 C65 84 84 80 84 64" stroke="url(#brandmark-under)" />
         <path
-          d="M84 64 C84 48 68 42 54 44 C40 46 28 54 22 68 C19 76 19 90 20 104"
+          d="M84 64 C84 48 68 42 54 44 C40 46 28 54 22 68 C19 76 19 90 20 104 L21 400"
           stroke="currentColor"
           strokeLinecap="round"
         />
