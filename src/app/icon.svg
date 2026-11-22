@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <clipPath id="tile"><rect width="100" height="100" rx="22"/></clipPath>
+    <linearGradient id="g-stem" gradientUnits="userSpaceOnUse" x1="34" y1="28" x2="41" y2="62">
+      <stop offset="0" stop-color="#fff"/>
+      <stop offset=".5" stop-color="#fff"/>
+      <stop offset="1" stop-color="#fff" stop-opacity=".28"/>
+    </linearGradient>
+    <linearGradient id="g-under" gradientUnits="userSpaceOnUse" x1="42" y1="62" x2="72" y2="82">
+      <stop offset="0" stop-color="#fff" stop-opacity=".28"/>
+      <stop offset="1" stop-color="#fff"/>
+    </linearGradient>
+  </defs>
+  <g clip-path="url(#tile)">
+    <rect width="100" height="100" fill="#3a6cf4"/>
+    <!-- stem: fades where it slips under the ribbon -->
+    <circle cx="34" cy="34" r="6.5" fill="#fff"/>
+    <path d="M34 34 C35.5 46 38 56 42 63" fill="none" stroke="url(#g-stem)" stroke-width="13"/>
+    <path d="M42 63 C46 70 49 72 53 75 C65 84 84 80 84 64" fill="none" stroke="url(#g-under)" stroke-width="13"/>
+    <!-- ribbon arc passing over the stem, tail bleeding off the bottom -->
+    <path d="M84 64 C84 48 68 42 54 44 C40 46 28 54 22 68 C19 76 19 90 20 104" fill="none" stroke="#fff" stroke-width="13" stroke-linecap="round"/>
+    <!-- oversized dot, cropped by the top edge -->
+    <circle cx="32" cy="8" r="14.5" fill="#ffc935"/>
+  </g>
+</svg>
