@@ -16,6 +16,18 @@ Semua file di sini dibuat dari `_source/build.mjs`, jadi ukuran dan warnanya kon
 
 Font: **Poppins** Bold (judul, nama) dan Medium (teks pendukung). Di website, teks panjang memakai Inter.
 
+## Alamat dan handle
+
+| Platform | Alamat |
+|---|---|
+| Website | `irsyadmuhf.vercel.app` |
+| LinkedIn | `linkedin.com/in/irsyadmuhf` |
+| GitHub | `github.com/irsydmuhf` |
+| Instagram | `instagram.com/irsydmuhf` |
+
+Website mengikuti ejaan LinkedIn (`irsyadmuhf`). GitHub dan Instagram tetap `irsydmuhf`, jadi jangan "dibetulkan" saat membuat desain baru.
+Alamat lama `irsydmuhf.vercel.app` masih jalan karena otomatis dialihkan ke alamat baru, tapi jangan dipakai lagi di desain.
+
 ## Isi folder
 
 ### `logo/`

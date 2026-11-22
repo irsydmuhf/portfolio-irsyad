@@ -20,7 +20,8 @@ const INFO = {
   url: "irsyadmuhf.vercel.app",
   email: "irsyad.muhf@gmail.com",
   linkedin: "linkedin.com/in/irsyadmuhf",
-  github: "github.com/irsydmuhf",
+  github: "github.com/irsydmuhf",       // GitHub & Instagram keep the old spelling on purpose
+  instagram: "instagram.com/irsydmuhf",
   tools: ["Python", "SQL", "pandas", "PostgreSQL", "Excel"],
 };
 
