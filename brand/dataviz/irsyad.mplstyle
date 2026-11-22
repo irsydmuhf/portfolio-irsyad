@@ -1,0 +1,35 @@
+# Irsyad chart style for matplotlib / seaborn
+# plt.style.use("path/to/irsyad.mplstyle")
+axes.prop_cycle: cycler('color', ['3A6CF4', 'E46F12', '00939B', 'E0403A', '6A4FE0', 'C48A00'])
+axes.edgecolor: E4E6EB
+axes.labelcolor: 5B6275
+axes.titlecolor: 15171C
+axes.titlesize: 14
+axes.titleweight: bold
+axes.titlelocation: left
+axes.labelsize: 11
+axes.spines.top: False
+axes.spines.right: False
+axes.grid: True
+axes.grid.axis: y
+axes.axisbelow: True
+grid.color: E4E6EB
+grid.linewidth: 0.8
+xtick.color: 5B6275
+ytick.color: 5B6275
+xtick.labelsize: 10
+ytick.labelsize: 10
+legend.frameon: False
+legend.fontsize: 10
+lines.linewidth: 2
+lines.markersize: 7
+patch.edgecolor: FFFFFF
+patch.linewidth: 1.5
+figure.facecolor: FFFFFF
+axes.facecolor: FFFFFF
+savefig.dpi: 200
+savefig.bbox: tight
+font.family: sans-serif
+font.sans-serif: Poppins, Inter, Arial, DejaVu Sans
+text.color: 15171C
+image.cmap: Blues

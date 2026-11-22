@@ -1,0 +1,30 @@
+{
+  "name": "Irsyad",
+  "dataColors": [
+    "#3a6cf4",
+    "#e46f12",
+    "#00939b",
+    "#e0403a",
+    "#6a4fe0",
+    "#c48a00"
+  ],
+  "background": "#FFFFFF",
+  "foreground": "#15171C",
+  "tableAccent": "#3A6CF4",
+  "good": "#1f9d55",
+  "neutral": "#e8a200",
+  "bad": "#c8302b",
+  "maximum": "#1F42AD",
+  "center": "#E4E6EB",
+  "minimum": "#E0403A",
+  "textClasses": {
+    "title": {
+      "fontFace": "Segoe UI Semibold",
+      "color": "#15171C"
+    },
+    "label": {
+      "fontFace": "Segoe UI",
+      "color": "#5B6275"
+    }
+  }
+}

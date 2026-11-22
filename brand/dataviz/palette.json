@@ -1,0 +1,94 @@
+{
+  "categorical": {
+    "light": [
+      [
+        "Blue",
+        "#3a6cf4"
+      ],
+      [
+        "Orange",
+        "#e46f12"
+      ],
+      [
+        "Teal",
+        "#00939b"
+      ],
+      [
+        "Coral",
+        "#e0403a"
+      ],
+      [
+        "Violet",
+        "#6a4fe0"
+      ],
+      [
+        "Gold",
+        "#c48a00"
+      ]
+    ],
+    "dark": [
+      [
+        "Blue",
+        "#4f7ef7"
+      ],
+      [
+        "Orange",
+        "#d9661a"
+      ],
+      [
+        "Teal",
+        "#0f9aa1"
+      ],
+      [
+        "Coral",
+        "#e0574d"
+      ],
+      [
+        "Violet",
+        "#8670ec"
+      ],
+      [
+        "Gold",
+        "#c08a00"
+      ]
+    ]
+  },
+  "sequential": [
+    "#eef3ff",
+    "#dce6ff",
+    "#b9cdff",
+    "#8aaaff",
+    "#5b86fb",
+    "#3a6cf4",
+    "#2753d8",
+    "#1f42ad",
+    "#1d3887",
+    "#1c3168"
+  ],
+  "diverging": [
+    "#c2342f",
+    "#e0403a",
+    "#f19a93",
+    "#e4e6eb",
+    "#8aaaff",
+    "#3a6cf4",
+    "#1f42ad"
+  ],
+  "highlight": {
+    "focus": "#3a6cf4",
+    "rest": "#c9cfdb",
+    "annotation": "#15171c"
+  },
+  "status": {
+    "good": "#1f9d55",
+    "warning": "#e8a200",
+    "critical": "#c8302b"
+  },
+  "neutral": {
+    "ink": "#15171c",
+    "text2": "#5b6275",
+    "grid": "#e4e6eb",
+    "surface": "#ffffff",
+    "surfaceDark": "#15171c"
+  }
+}

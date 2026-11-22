@@ -1,0 +1,126 @@
+{
+  "layout": {
+    "colorway": [
+      "#3a6cf4",
+      "#e46f12",
+      "#00939b",
+      "#e0403a",
+      "#6a4fe0",
+      "#c48a00"
+    ],
+    "font": {
+      "family": "Poppins, Inter, Arial, sans-serif",
+      "color": "#15171c",
+      "size": 13
+    },
+    "title": {
+      "x": 0,
+      "xanchor": "left",
+      "font": {
+        "size": 18
+      }
+    },
+    "paper_bgcolor": "#ffffff",
+    "plot_bgcolor": "#ffffff",
+    "xaxis": {
+      "showgrid": false,
+      "linecolor": "#e4e6eb",
+      "tickcolor": "#e4e6eb",
+      "tickfont": {
+        "color": "#5b6275"
+      }
+    },
+    "yaxis": {
+      "gridcolor": "#e4e6eb",
+      "zeroline": false,
+      "tickfont": {
+        "color": "#5b6275"
+      }
+    },
+    "legend": {
+      "orientation": "h",
+      "y": 1.08,
+      "x": 0
+    },
+    "colorscale": {
+      "sequential": [
+        [
+          0,
+          "#eef3ff"
+        ],
+        [
+          0.1111111111111111,
+          "#dce6ff"
+        ],
+        [
+          0.2222222222222222,
+          "#b9cdff"
+        ],
+        [
+          0.3333333333333333,
+          "#8aaaff"
+        ],
+        [
+          0.4444444444444444,
+          "#5b86fb"
+        ],
+        [
+          0.5555555555555556,
+          "#3a6cf4"
+        ],
+        [
+          0.6666666666666666,
+          "#2753d8"
+        ],
+        [
+          0.7777777777777778,
+          "#1f42ad"
+        ],
+        [
+          0.8888888888888888,
+          "#1d3887"
+        ],
+        [
+          1,
+          "#1c3168"
+        ]
+      ],
+      "diverging": [
+        [
+          0,
+          "#c2342f"
+        ],
+        [
+          0.16666666666666666,
+          "#e0403a"
+        ],
+        [
+          0.3333333333333333,
+          "#f19a93"
+        ],
+        [
+          0.5,
+          "#e4e6eb"
+        ],
+        [
+          0.6666666666666666,
+          "#8aaaff"
+        ],
+        [
+          0.8333333333333334,
+          "#3a6cf4"
+        ],
+        [
+          1,
+          "#1f42ad"
+        ]
+      ]
+    },
+    "hoverlabel": {
+      "bgcolor": "#15171c",
+      "font": {
+        "color": "#ffffff"
+      }
+    }
+  }
+}

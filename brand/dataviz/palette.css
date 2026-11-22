@@ -1,0 +1,22 @@
+/* Irsyad chart palette */
+:root {
+  --series-1: #3a6cf4;
+  --series-2: #e46f12;
+  --series-3: #00939b;
+  --series-4: #e0403a;
+  --series-5: #6a4fe0;
+  --series-6: #c48a00;
+  --focus: #3a6cf4;
+  --rest: #c9cfdb;
+  --grid: #e4e6eb;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --series-1: #4f7ef7;
+    --series-2: #d9661a;
+    --series-3: #0f9aa1;
+    --series-4: #e0574d;
+    --series-5: #8670ec;
+    --series-6: #c08a00;
+  }
+}
