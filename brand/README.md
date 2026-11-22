@@ -77,7 +77,7 @@ Palet 6 warna untuk grafik, **pakai sesuai urutan** (Blue, Orange, Teal, Coral, 
 
 ### `badges/` — tech stack dan skill
 - `tech/chip/`: pil putih dengan logo, 24 tools. Bisa dipakai di latar putih maupun biru.
-- `tech/keycap/`: versi tuts keyboard, seperti di hero website.
+- `tech/tile/` dan `tech/tile-labeled/`: tile logo berwarna merek dengan efek tuts 3D, sama persis dengan deretan tech stack di website. Versi `labeled` sudah berisi nama di bawahnya.
 - `skills/`: pil teks, warna titik menandai kategori (Analytics biru, Data & Automation teal, BI & Reporting oranye, Data Systems violet).
 - `tech-stack-sheet.png`: semua badge dalam satu gambar.
 

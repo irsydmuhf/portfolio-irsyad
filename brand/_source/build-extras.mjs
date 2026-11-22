@@ -201,7 +201,7 @@ await render("dataviz/palette-sheet", 1200, 980, h({ width: 1200, height: 980, b
 const TECH = [
   ["Python", "siPython"], ["SQL", null, "SQL", "#3a6cf4"], ["PostgreSQL", "siPostgresql"], ["MySQL", "siMysql"],
   ["pandas", "siPandas"], ["NumPy", "siNumpy"], ["Jupyter", "siJupyter"], ["Google Colab", "siGooglecolab"],
-  ["Excel", null, "XL", "#217346"], ["Google Sheets", "siGooglesheets"], ["Apps Script", "siGoogleappsscript"],
+  ["Excel", null, "XL", "#217346"], ["Google Sheets", "siGooglesheets"], ["Google Apps Script", "siGoogleappsscript"],
   ["Power BI", null, "BI", "#F2C811", "#15171c"], ["Looker Studio", null, "LS", "#4285F4"], ["Tableau", null, "Tb", "#E97627"],
   ["BigQuery", "siGooglebigquery"], ["Plotly", "siPlotly"], ["scikit-learn", "siScikitlearn"], ["Streamlit", "siStreamlit"],
   ["Airflow", "siApacheairflow"], ["AWS", null, "aws", "#232F3E"], ["Supabase", "siSupabase"], ["Docker", "siDocker"],
@@ -213,16 +213,34 @@ const logo = ([, key, mono, bg, fg = "#ffffff"], size) => key
   ? img(uri(logoSvg(key)), size, size)
   : h({ width: size, height: size, borderRadius: size * 0.24, background: bg, color: fg, alignItems: "center", justifyContent: "center", fontSize: size * (mono.length > 2 ? 0.36 : 0.46), fontWeight: 700 }, mono);
 
+
+// same maths as the website: base = face mixed 68% with black, glyph picks ink or
+// white by luminance, soft glow in the brand colour under the key
+const lum = (hex) => { const n = parseInt(hex.slice(1), 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255].map((c) => { const v = c / 255; return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; }).reduce((a, v, i) => a + v * [0.2126, 0.7152, 0.0722][i], 0); };
+const shade = (hex, k = 0.68) => "#" + [1, 3, 5].map((i) => Math.round(parseInt(hex.slice(i, i + 2), 16) * k).toString(16).padStart(2, "0")).join("");
+function techTile([, key, mono, monoBg], size) {
+  const bg = key ? `#${si[key].hex}` : monoBg;
+  const fg = lum(bg) > 0.45 ? "#15171c" : "#ffffff";
+  const radius = Math.round(size * 0.26), depth = Math.max(4, Math.round(size * 0.09));
+  const glyph = key
+    ? img(uri(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="${fg}" d="${si[key].path}"/></svg>`), size * 0.5, size * 0.5)
+    : h({ color: fg, fontSize: size * (mono.length > 2 ? 0.3 : 0.4), fontWeight: 700, letterSpacing: -1 }, mono);
+  return h({ width: size, height: size, flexShrink: 0, position: "relative", borderRadius: radius, background: shade(bg), boxShadow: `0 ${size * 0.23}px ${size * 0.31}px -${size * 0.23}px ${bg}` },
+    h({ position: "absolute", left: 0, right: 0, top: 0, bottom: depth, borderRadius: radius, background: bg, alignItems: "center", justifyContent: "center", overflow: "hidden" },
+      h({ position: "absolute", left: 0, right: 0, top: 0, bottom: 0, backgroundImage: "linear-gradient(180deg, rgba(255,255,255,.28), rgba(255,255,255,0) 55%)" }),
+      glyph));
+}
+
 for (const t of TECH) {
   const name = t[0];
   // chip: white pill, works on white and on brand blue
   await renderChip(`badges/tech/chip/${slug(name)}`, 56, { borderRadius: 999, background: "#ffffff", border: "2px solid #e2e7f2", alignItems: "center", gap: 12, padding: "0 22px 0 14px", fontFamily: "Poppins", fontSize: 20, fontWeight: 500, color: "#15171c" },
     [logo(t, 28), name]);
-  // keycap: square cap like the keycaps on the website's desk
-  await render(`badges/tech/keycap/${slug(name)}`, 200, 216, h({ width: 200, height: 216, position: "relative", fontFamily: "Poppins" },
-    h({ position: "absolute", left: 8, top: 14, width: 184, height: 196, borderRadius: 44, background: "#cfd8ec" }),
-    h({ position: "absolute", left: 18, top: 10, width: 164, height: 160, borderRadius: 36, background: "#ffffff", border: "2px solid #e2e7f2", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 10 },
-      logo(t, 64), h({ fontSize: name.length > 11 ? 15 : 18, fontWeight: 700, color: "#15171c" }, name))));
+  // tile: the website's TechIcon (src/components/home/TechIcon.tsx), scaled up
+  const T = 160;
+  await render(`badges/tech/tile/${slug(name)}`, T + 64, T + 84, h({ width: T + 64, height: T + 84, paddingTop: 24, justifyContent: "center", fontFamily: "Poppins" }, techTile(t, T)));
+  await render(`badges/tech/tile-labeled/${slug(name)}`, 300, T + 150, h({ width: 300, height: T + 150, paddingTop: 24, flexDirection: "column", alignItems: "center", fontFamily: "Poppins" },
+    techTile(t, T), h({ marginTop: 34, width: 260, justifyContent: "center", textAlign: "center", fontSize: 30, fontWeight: 500, lineHeight: 1.2, color: "#7a7a7a" }, name)));
 }
 
 // skills: text chips, dot colour = category (categorical slots 1-4)

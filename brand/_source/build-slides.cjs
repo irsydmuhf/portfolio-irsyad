@@ -196,7 +196,7 @@ const pxSize = (p) => sharp(p).metadata().then((m) => ({ w: m.width, h: m.height
   // 8 tools & skills (badge images from brand/badges)
   s = pres.addSlide({ masterName: "Content", sectionTitle: "About me" });
   s.addText("Tools & skills", { placeholder: "title" });
-  const chipH = 0.5;
+  const chipH = 0.42;
   async function chipRow(files, x0, y, maxX) {
     let x = x0;
     for (const f of files) {
@@ -210,13 +210,19 @@ const pxSize = (p) => sharp(p).metadata().then((m) => ({ w: m.width, h: m.height
     return y + chipH;
   }
   s.addText("TOOLS", { x: 0.6, y: 1.55, w: 4, h: 0.3, fontSize: 12, bold: true, color: COL.brand, charSpacing: 2, margin: 0, isTextBox: true });
-  const tools = ["python", "sql", "postgresql", "pandas", "power-bi", "looker-studio", "google-sheets", "apps-script", "excel", "jupyter", "aws", "supabase", "git", "github"];
-  let y = await chipRow(tools.map((t) => `badges/tech/chip/${t}@2x.png`), 0.6, 1.95, 12.7);
-  s.addText("SKILLS", { x: 0.6, y: y + 0.35, w: 4, h: 0.3, fontSize: 12, bold: true, color: COL.brand, charSpacing: 2, margin: 0, isTextBox: true });
+  // tools: the website-style tiles with labels, 8 per row
+  const tools = ["python", "sql", "postgresql", "pandas", "power-bi", "looker-studio", "google-sheets", "google-apps-script", "excel", "jupyter", "aws", "supabase", "git", "github"];
+  const tileW = 1.42, tileH = tileW * 310 / 300;
+  tools.forEach((t, i) => {
+    const p = path.join(BRAND, `badges/tech/tile-labeled/${t}@2x.png`);
+    s.addImage({ data: fileData(p), x: 0.27 + (i % 8) * 1.5, y: 1.85 + Math.floor(i / 8) * (tileH + 0.02), w: tileW, h: tileH, objectName: `tool-${t}` });
+  });
+  let y = 1.85 + 2 * tileH - 0.05;
+  s.addText("SKILLS", { x: 0.6, y: y + 0.1, w: 4, h: 0.3, fontSize: 12, bold: true, color: COL.brand, charSpacing: 2, margin: 0, isTextBox: true });
   const skillFiles = fs.readdirSync(path.join(BRAND, "badges/skills")).filter((f) => f.endsWith("@2x.png"));
   const order = ["analytics", "data-automation", "bi-reporting", "data-systems"];
   skillFiles.sort((a, b) => order.indexOf(a.split("--")[0]) - order.indexOf(b.split("--")[0]));
-  await chipRow(skillFiles.filter((f) => !/--(python|pandas|power-bi|looker-studio|google-sheets|sql)@/.test(f)).map((f) => `badges/skills/${f}`), 0.6, y + 0.75, 12.7);
+  await chipRow(skillFiles.filter((f) => !/--(python|pandas|power-bi|looker-studio|google-sheets|sql)@/.test(f)).map((f) => `badges/skills/${f}`), 0.6, y + 0.48, 12.7);
   s.addNotes("Every badge is a separate image in brand/badges. Swap or reorder them freely.");
 
   // 9 closing
